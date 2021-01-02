@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class GEvent<T> where T : GEvent<T>
@@ -42,6 +43,12 @@ public abstract class GEvent<T> where T : GEvent<T>
 
 public class DebugEvent : GEvent<DebugEvent>{}
 
-public class OnDiceUsed : GEvent<OnDiceUsed> { public ICard Card; public Dice Dice; }
+public class OnDiceUsed : GEvent<OnDiceUsed> { public Card Card; public Dice Dice; }
+
+public class OnDamageReceived : GEvent<OnDamageReceived> { public int damage; }
+
+public class OnRecoveryHealth : GEvent<OnRecoveryHealth> { public int recoveryHealth; }
+
+public class OnSplitDice : GEvent<OnSplitDice> { public List<int> numbers; }
 
 public class OnRerollDice : GEvent<OnRerollDice> { public int rerollRemains; }

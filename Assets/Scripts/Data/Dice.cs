@@ -33,11 +33,13 @@ public class Dice : PoolObject, IPointerDownHandler, IPointerUpHandler, IDragHan
 
     #region Public methods
 
-    public void Initialize()
-    {
-        number = Random.Range(1, 7);
+    public void Initialize()  {
+        Initialize(Random.Range(1, 7));
+    }
+
+    public void Initialize(int number) {
+        this.number = number;
         image.sprite = Core.Instance.GetDiceImage(number);
-        initialPos = transform.position;
     }
 
     #endregion
@@ -52,6 +54,7 @@ public class Dice : PoolObject, IPointerDownHandler, IPointerUpHandler, IDragHan
     public void OnPointerDown(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = false;
+        initialPos = transform.position;
     }
 
     public void OnPointerUp(PointerEventData eventData)
