@@ -13,17 +13,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Pool<Dice> enemyDicePool;
     [SerializeField] private Transform enemyDiceParent;
     [SerializeField] private PlayerUI playerUI;
+    [SerializeField] private RewardManager rewardManager;
+    [SerializeField] private InventoryManager inventoryManager;
 
     [Header("Propiedades del tablero")]
     [SerializeField] private CardUI[] cardPool;
     [SerializeField] private Pool<Dice> dicePool;
     [SerializeField] private Dice dicePrefab;
     [SerializeField] private Transform diceParent;
+    [SerializeField] private GameObject blocker;
 
     [Header("Botones")]
     [SerializeField] private Button endTurnButton;
     [SerializeField] private Button gameOverButton;
     [SerializeField] private Button exitButton;
+    [SerializeField] private Button nextLevelButton;
+    [SerializeField] private Button inventoryButton;
 
     [Header("Popups")]
     [SerializeField] private GameObject winPopUp;
@@ -44,10 +49,10 @@ public class GameManager : MonoBehaviour
         dicePool = new Pool<Dice>(dicePrefab, diceParent, 6);
         enemyDicePool = new Pool<Dice>(dicePrefab, enemyDiceParent, 6);
         
-        enemyManager.Initialize(Core.Instance.GetNextEnemy());
+        enemyManager.Initialize(Core.Instance.CurrentLevel.enemyData);
         playerUI.Initialize();
 
-        InitData();
+        InitializePlayerDices();
     }
 
     private void OnDestroy() {
@@ -58,6 +63,10 @@ public class GameManager : MonoBehaviour
         endTurnButton.onClick.AddListener(EndTurn);
         gameOverButton.onClick.AddListener(() => Core.Instance.GoToMenu());
         exitButton.onClick.AddListener(() => Core.Instance.GoToMenu());
+        nextLevelButton.onClick.AddListener(() => Core.Instance.GoToNextLevel());
+        inventoryButton.onClick.AddListener(() => inventoryManager.Initialize());
+        nextLevelButton.gameObject.SetActive(false);
+        inventoryButton.gameObject.SetActive(false);
     }
 
     private void SuscribeEvents() {
@@ -66,6 +75,8 @@ public class GameManager : MonoBehaviour
         OnDamageReceived.RegisterListener(OnDamageReceivedListener);
         OnRecoveryHealth.RegisterListener(OnRecoveryHealthListener);
         OnSplitDice.RegisterListener(OnSplitDiceListener);
+        OnAddShieldDice.RegisterListener(OnAddShieldDiceListener);
+        OnAddDodgeDice.RegisterListener(OnAddDodgeDiceListener);
         EnemyManager.OnEndTurn += EndTurn;
     }
 
@@ -75,6 +86,8 @@ public class GameManager : MonoBehaviour
         OnDamageReceived.UnregisterListener(OnDamageReceivedListener);
         OnRecoveryHealth.UnregisterListener(OnRecoveryHealthListener);
         OnSplitDice.UnregisterListener(OnSplitDiceListener);
+        OnAddShieldDice.UnregisterListener(OnAddShieldDiceListener);
+        OnAddDodgeDice.UnregisterListener(OnAddDodgeDiceListener);
         EnemyManager.OnEndTurn -= EndTurn;
     }
 
@@ -115,12 +128,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void InitData()
+    private void InitializePlayerDices()
     {
         InitializeCards();
 
         dicePool.ClearPool();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < Core.Instance.CurrentLevel.numDice; i++) {
             Dice dice = dicePool.GetPoolObject();
             dice.Initialize();
         }
@@ -129,7 +142,7 @@ public class GameManager : MonoBehaviour
     private List<Dice> InitializeEnemyDices() {
         List<Dice> enemyDicesNumbers = new List<Dice>();
         enemyDicePool.ClearPool();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < Core.Instance.CurrentLevel.numDice; i++) {
             Dice dice = enemyDicePool.GetPoolObject();
             dice.Initialize();
             enemyDicesNumbers.Add(dice);
@@ -143,8 +156,15 @@ public class GameManager : MonoBehaviour
         if (playerTurn) {
             //Preparamos los datos del jugador
             enemyDicePool.ClearPool();
-            InitData();
+            InitializePlayerDices();
+            playerUI.ResetShieldAndDodge();
+            playerUI.UpdateState();
+            blocker.SetActive(false);
         } else {
+            blocker.SetActive(true);
+            enemyManager.ResetShieldAndDodge();
+            enemyManager.UpdateState();
+
             //Preparamos los datos del enemigo
             List<CardUI> cardUIs = InitializeEnemyCards();
             dicePool.ClearPool();
@@ -163,7 +183,12 @@ public class GameManager : MonoBehaviour
     private void PlayerWins() {
         winPopUp.SetActive(true);
         //Paramos el juego
-        StartCoroutine(_WaitFor(5f, () => Core.Instance.GoToGameScene()));
+        StartCoroutine(_WaitFor(3f, () => {
+            rewardManager.Initialize(Core.Instance.CurrentLevel.enemyData);
+            rewardManager.gameObject.SetActive(true);
+            nextLevelButton.gameObject.SetActive(true);
+            inventoryButton.gameObject.SetActive(true);
+        }));
     }
 
     #endregion
@@ -180,11 +205,6 @@ public class GameManager : MonoBehaviour
             }
            
             data.Card.Use(data.Dice.Number);
-
-            if (enemyManager.EnemyData.Health <= 0) {
-                Debug.LogError("GANAMOS");
-            }
-               
         }
     }
 
@@ -247,6 +267,26 @@ public class GameManager : MonoBehaviour
                 Dice dice = enemyDicePool.GetPoolObject();
                 dice.Initialize(data.numbers[i]);
             }
+        }
+    }
+
+    private void OnAddShieldDiceListener(OnAddShieldDice data) {
+        if (playerTurn) {
+            Core.Instance.PlayerData.Shield += data.amount;
+            playerUI.UpdateState();
+        } else {
+            enemyManager.EnemyData.Shield += data.amount;
+            enemyManager.UpdateState();
+        }
+    }
+
+    private void OnAddDodgeDiceListener(OnAddDodgeDice data) {
+        if (playerTurn) {
+            Core.Instance.PlayerData.Dodge = true;
+            playerUI.UpdateState();
+        } else {
+            enemyManager.EnemyData.Dodge = true;
+            enemyManager.UpdateState();
         }
     }
 

@@ -15,9 +15,14 @@ MonoBehaviour:
   Name: Enemigo 1
   Image: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   MaxHealth: 10
-  Health: 4
+  Health: 10
+  Shield: 0
+  Dodge: 0
   Cards:
   - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
   - {fileID: 11400000, guid: 334a7c8fcea196540b88271c8e31c892, type: 2}
   - {fileID: 11400000, guid: 5bebaba1b73dcf84b95de41c3c8492d6, type: 2}
+  - {fileID: 11400000, guid: 3043a57c53d9d2b40998b38b0b3df4ba, type: 2}
+  Inventory:
+  - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
   - {fileID: 11400000, guid: 3043a57c53d9d2b40998b38b0b3df4ba, type: 2}

@@ -51,4 +51,9 @@ public class OnRecoveryHealth : GEvent<OnRecoveryHealth> { public int recoveryHe
 
 public class OnSplitDice : GEvent<OnSplitDice> { public List<int> numbers; }
 
+public class OnAddDodgeDice : GEvent<OnAddDodgeDice> {  }
+
+public class OnAddShieldDice : GEvent<OnAddShieldDice> { public int amount; }
+
+
 public class OnRerollDice : GEvent<OnRerollDice> { public int rerollRemains; }

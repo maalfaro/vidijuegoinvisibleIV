@@ -33,11 +33,21 @@ public class EnemyManager : MonoBehaviour
         SetImage(enemyData.Image);
         SetName(enemyData.Name);
         SetHealth(enemyData.Health, enemyData.MaxHealth);
+        SetState(enemyData.Shield, enemyData.Dodge);
     }
 
     #endregion
 
     #region Public methods
+
+    public void UpdateState() {
+        SetState(enemyData.Shield, enemyData.Dodge);
+    }
+
+    public void ResetShieldAndDodge() {
+        enemyData.ResetDodge();
+        enemyData.ResetShield();
+    }
 
     public void DoAction(List<Dice> diceList, List<CardUI> cardsUI) {
 
@@ -64,9 +74,27 @@ public class EnemyManager : MonoBehaviour
     }
 
     public int ReceiveDamage(int damage) {
+
+        if (enemyData.Dodge) {
+            enemyData.ResetDodge();
+            SetState(enemyData.Shield, enemyData.Dodge);
+            return enemyData.Health;
+        }
+
+        //Si el escudo es menor que el daño que recibimos quitamos al daño el escudo y hacemos el daño
+        //sino le quitamos al escudo el daño que recibimos y salimos sin recibir daño.
+        if (damage >= enemyData.Shield) {
+            damage -= enemyData.Shield;
+        } else {
+            enemyData.Shield -= damage;
+            SetState(enemyData.Shield, enemyData.Dodge);
+            return enemyData.Health;
+        }
+
         enemyData.Health -= damage;
         enemyData.Health = enemyData.Health <= 0 ? 0 : enemyData.Health;
         SetHealth(enemyData.Health, enemyData.MaxHealth);
+        SetState(enemyData.Shield, enemyData.Dodge);
 
         return enemyData.Health;
     }
@@ -116,6 +144,17 @@ public class EnemyManager : MonoBehaviour
     {
         healthText.text = $"{health} / {totalHealth}";
         sliderHealth.value = (float)health / (float)totalHealth;
+    }
+
+    private void SetState(int shield, bool dodge) {
+        string text = string.Empty;
+        if (shield > 0) {
+            text += $"+{shield} Escudo ";
+        }
+        if (dodge) {
+            text += $" +1 Esquivar";
+        }
+        stateText.text = text;
     }
 
     #endregion

@@ -13,8 +13,13 @@ public class Core : Singleton<Core>
     [SerializeField] private Card[] selectedCards;
     public Card[] SelectedCards => playerData.Cards;
 
-    [SerializeField] private List<Enemy> enemies;
+    [SerializeField] private List<Enemy> enemiesPrefabs;
+    [SerializeField] private List<LevelData> levels;
 
+    [SerializeField] private LevelData currentLevel;
+    public LevelData CurrentLevel => currentLevel; 
+
+ 
     [SerializeField] private PlayerData playerData;
     public PlayerData PlayerData => playerData;
 
@@ -25,12 +30,11 @@ public class Core : Singleton<Core>
     protected override void InitInstance()
     {
         base.InitInstance();
-        //selectedCards = new Card[4];
-        //selectedCards[0] = new BasicAttackCard();
-        //selectedCards[1] = new RerollCard(3);
-        playerData.Health = playerData.MaxHealth;
 
-        GoToGameScene();
+        IntializePlayerData();
+        IntializeLevels();
+
+        GoToNextLevel();
     }
 
     #endregion
@@ -42,8 +46,19 @@ public class Core : Singleton<Core>
         SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Single);
     }
 
-    public void GoToGameScene() {
-        SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Single);
+    public void GoToNextLevel() {
+
+        if (levels.Count > 0) {
+            currentLevel = levels[0];
+            levels.RemoveAt(0);
+            SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Single);
+        } else {
+            //Ir al nivel fin del juego
+        }
+    }
+
+    public void StartGame() {
+        IntializeLevels();
     }
 
     public Sprite GetDiceImage(int number)
@@ -51,11 +66,30 @@ public class Core : Singleton<Core>
         return diceImages[number - 1];
     }
 
-    public Enemy GetNextEnemy()
-    {
-        Enemy nextEnemy = enemies[0];
-        enemies.RemoveAt(0);
-        return nextEnemy;
+    #endregion
+
+    #region Private methods
+
+    private void IntializePlayerData() {
+        playerData.Health = playerData.MaxHealth;
+        playerData.Dodge = false;
+        playerData.Shield = 0;
+        playerData.Cards = new Card[playerData.Inventory.Count];
+        for(int i=0;i< playerData.Cards.Length;i++) {
+            playerData.Cards[i] = playerData.Inventory[i];
+        }
+    }
+
+    private void IntializeLevels() {
+        levels = new List<LevelData>();
+        enemiesPrefabs.Shuffle();
+
+        for(int i = 0; i < enemiesPrefabs.Count; i++) {
+            LevelData level = new LevelData();
+            level.enemyData = (Enemy) enemiesPrefabs[i].Clone();
+            level.numDice = i < 2 ? 2 : i < 6 ? 3 : 4;
+            levels.Add(level);
+        }
     }
 
     #endregion
@@ -72,5 +106,13 @@ public class Core : Singleton<Core>
     }
 
     #endregion
+
+}
+
+[System.Serializable]
+public class LevelData {
+
+    public Enemy enemyData;
+    public int numDice;
 
 }
