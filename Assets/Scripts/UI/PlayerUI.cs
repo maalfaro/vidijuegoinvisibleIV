@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
-#if UNITY_EDITOR
-using System.IO;
-using UnityEditor;
-#endif
+
 
 public class PlayerUI : MonoBehaviour
 {
@@ -106,45 +102,3 @@ public class PlayerUI : MonoBehaviour
     #endregion
 }
 
-[System.Serializable]
-public class PlayerData : ScriptableObject, ICloneable {
-
-    public string Name;
-    public Sprite Image;
-    public int MaxHealth;
-    public int Health;
-    public int Shield;
-    public bool Dodge;
-    public Card[] Cards;
-
-    public List<Card> Inventory;
-
-    public void ResetShield() {
-        Shield = 0;
-    }
-
-    public void ResetDodge() {
-        Dodge = false;
-    }
-
-    public object Clone() {
-        return this.MemberwiseClone();
-    }
-
-#if UNITY_EDITOR
-    [MenuItem("Assets/Create/Debug/Player", false, 1022)]
-    static void CreatePlayerAsset() {
-        const string Folder = "Assets/Database";
-        const string AssetPath = Folder + "/Player.asset";
-        if (File.Exists(AssetPath))
-            return;
-
-        if (!Directory.Exists(Folder))
-            Directory.CreateDirectory(Folder);
-
-        var playerAsset = CreateInstance<PlayerData>();
-        AssetDatabase.CreateAsset(playerAsset, AssetPath);
-    }
-
-#endif
-}

@@ -9,8 +9,7 @@ public class Core : Singleton<Core>
     #region Variables
 
     [SerializeField] private Sprite[] diceImages;
-    [SerializeField] private List<Card> inventoryCards;
-    [SerializeField] private Card[] selectedCards;
+
     public Card[] SelectedCards => playerData.Cards;
 
     [SerializeField] private List<Enemy> enemiesPrefabs;
@@ -74,10 +73,10 @@ public class Core : Singleton<Core>
         playerData.Health = playerData.MaxHealth;
         playerData.Dodge = false;
         playerData.Shield = 0;
-        playerData.Cards = new Card[playerData.Inventory.Count];
-        for(int i=0;i< playerData.Cards.Length;i++) {
-            playerData.Cards[i] = playerData.Inventory[i];
-        }
+        //playerData.Cards = new Card[playerData.Inventory.Count];
+        //for(int i=0;i< playerData.Cards.Length;i++) {
+        //    playerData.Cards[i] = playerData.Inventory[i];
+        //}
     }
 
     private void IntializeLevels() {

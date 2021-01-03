@@ -12,6 +12,15 @@ public class InventoryManager : MonoBehaviour
 
     #endregion
 
+    private void Awake() {
+        OnUpdateInventory.RegisterListener(OnUpdateInventoryListener);
+    }
+
+    private void OnDestroy() {
+        OnUpdateInventory.UnregisterListener(OnUpdateInventoryListener);
+    }
+
+
     public void Initialize()
     {
         InitializePlayerCards();
@@ -20,24 +29,28 @@ public class InventoryManager : MonoBehaviour
 
     private void InitializePlayerCards() {
         PlayerData playerData = Core.Instance.PlayerData;
-        for (int i = 0; i < playerData.Cards.Length; i++) {
+        for (int i = 1; i < cardsInInventory.Length+1; i++) {
             if (i < playerData.Cards.Length) {
-                cardsInInventory[i].Initialize(playerData.Cards[i]);
+                cardsInInventory[i-1].Initialize(playerData.Cards[i],false,i);
             } else {
-                cardsInInventory[i].Initialize(null);
+                cardsInInventory[i-1].Initialize(null, false,i);
             }
         }
     }
 
     private void InitializeInventoryList() {
         PlayerData playerData = Core.Instance.PlayerData;
-        for (int i = 0; i < playerData.Inventory.Count; i++) {
-            if (i < playerData.Cards.Length) {
-                cardsInInventory[i].Initialize(playerData.Cards[i]);
+        for (int i = 0; i < cardsInventoryList.Count; i++) {
+            if (i < playerData.Inventory.Count) {
+                cardsInventoryList[i].Initialize(playerData.Inventory[i],true,i);
             } else {
-                cardsInInventory[i].Initialize(null);
+                cardsInventoryList[i].Initialize(null, true,i);
             }
         }
+    }
+
+    private void OnUpdateInventoryListener(OnUpdateInventory data) {
+        Initialize();
     }
 
 }

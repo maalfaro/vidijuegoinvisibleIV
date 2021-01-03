@@ -159,11 +159,15 @@ MonoBehaviour:
   - {fileID: -5478230469006044976, guid: cd32e54282839b94f843a7b93177e47b, type: 3}
   - {fileID: -2205863333093305225, guid: cd32e54282839b94f843a7b93177e47b, type: 3}
   inventoryCards: []
-  selectedCards: []
   enemiesPrefabs:
   - {fileID: 11400000, guid: ff0b56b9dbce98045bbece51c5a7ea94, type: 2}
   - {fileID: 11400000, guid: d2ed18dc098b3fd48b45c7910bd97364, type: 2}
-  enemiesList: []
+  - {fileID: 11400000, guid: de052fe1dc8b10442809c2c63684bd18, type: 2}
+  - {fileID: 11400000, guid: ddda0fc8aa2f1bf4d925b842b4ab9cb0, type: 2}
+  levels: []
+  currentLevel:
+    enemyData: {fileID: 0}
+    numDice: 0
   playerData: {fileID: 11400000, guid: 179fbcbf0f72f3a4894dd272ff6f9285, type: 2}
 --- !u!4 &601615124
 Transform:

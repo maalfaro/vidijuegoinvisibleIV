@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c68c53f5f00b73347bca940bad030db4, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: Assembly-CSharp::PlayerData
   Name: Ruly
@@ -18,7 +18,11 @@ MonoBehaviour:
   Health: 30
   Shield: 0
   Dodge: 0
-  Cards: []
-  Inventory:
+  Cards:
   - {fileID: 11400000, guid: bd1db8f9719885147b9649be6f23bdb0, type: 2}
+  - {fileID: 11400000, guid: 3043a57c53d9d2b40998b38b0b3df4ba, type: 2}
+  - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
+  - {fileID: 11400000, guid: 88a4e36a91e57274db422358862f5275, type: 2}
+  Inventory:
   - {fileID: 11400000, guid: 334a7c8fcea196540b88271c8e31c892, type: 2}
+  - {fileID: 11400000, guid: 11355f4fbfb07ec489221a9edec2d2ba, type: 2}

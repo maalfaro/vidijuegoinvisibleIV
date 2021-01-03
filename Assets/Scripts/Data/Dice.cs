@@ -11,6 +11,7 @@ public class Dice : PoolObject, IPointerDownHandler, IPointerUpHandler, IDragHan
 
     [SerializeField] private Image image;
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private Canvas canvas;
 
     #endregion
 
@@ -55,12 +56,14 @@ public class Dice : PoolObject, IPointerDownHandler, IPointerUpHandler, IDragHan
     {
         canvasGroup.blocksRaycasts = false;
         initialPos = transform.position;
+        canvas.sortingOrder = 2;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         transform.position = initialPos;
         canvasGroup.blocksRaycasts = true;
+        canvas.sortingOrder = 1;
     }
 
     #endregion

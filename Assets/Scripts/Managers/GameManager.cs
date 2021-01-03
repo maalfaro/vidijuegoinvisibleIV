@@ -34,6 +34,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject winPopUp;
     [SerializeField] private GameObject losePopUp;
 
+    [Header("Layouts")]
+    [SerializeField] private Transform playerLayout;
+    [SerializeField] private Transform enemyLayout;
+    [SerializeField] private CanvasGroup cardsCanvasGroup; 
+
     private bool playerTurn;
 
     #endregion
@@ -61,10 +66,10 @@ public class GameManager : MonoBehaviour
 
     private void InitializeButtons() {
         endTurnButton.onClick.AddListener(EndTurn);
-        gameOverButton.onClick.AddListener(() => Core.Instance.GoToMenu());
-        exitButton.onClick.AddListener(() => Core.Instance.GoToMenu());
-        nextLevelButton.onClick.AddListener(() => Core.Instance.GoToNextLevel());
-        inventoryButton.onClick.AddListener(() => inventoryManager.Initialize());
+        gameOverButton.onClick.AddListener(Core.Instance.GoToMenu);
+        exitButton.onClick.AddListener(Core.Instance.GoToMenu);
+        nextLevelButton.onClick.AddListener(Core.Instance.GoToNextLevel);
+        inventoryButton.onClick.AddListener(ShowInventory);
         nextLevelButton.gameObject.SetActive(false);
         inventoryButton.gameObject.SetActive(false);
     }
@@ -99,6 +104,7 @@ public class GameManager : MonoBehaviour
         ClearCards();
         for (int i = 0; i < Core.Instance.SelectedCards.Length; i++) {
             Card cardData = Core.Instance.SelectedCards[i];
+            if (cardData == null) continue;
             CardUI cardUI = cardPool[i];
             cardUI.gameObject.SetActive(cardData != null);
             if (cardData != null) {
@@ -182,6 +188,10 @@ public class GameManager : MonoBehaviour
 
     private void PlayerWins() {
         winPopUp.SetActive(true);
+        StartCoroutine(_MoveAnim(playerLayout, playerLayout.position + (Vector3.down * Screen.height), 0.5f));
+        StartCoroutine(_MoveAnim(enemyLayout, playerLayout.position + (Vector3.up * Screen.height), 0.5f));
+        StartCoroutine(_Fade(cardsCanvasGroup,1,0,0.5f));
+
         //Paramos el juego
         StartCoroutine(_WaitFor(3f, () => {
             rewardManager.Initialize(Core.Instance.CurrentLevel.enemyData);
@@ -189,6 +199,11 @@ public class GameManager : MonoBehaviour
             nextLevelButton.gameObject.SetActive(true);
             inventoryButton.gameObject.SetActive(true);
         }));
+    }
+
+    private void ShowInventory() {
+        inventoryManager.Initialize();
+        inventoryManager.gameObject.SetActive(true);
     }
 
     #endregion
@@ -292,4 +307,30 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Coroutines
+
+    private IEnumerator _MoveAnim(Transform transform, Vector3 target, float animTime) {
+
+        float timer = 0.0f;
+        Vector3 initialPos = transform.position;
+        while (timer <= 1) {
+            timer += Time.deltaTime / animTime;
+            transform.position = Vector3.Lerp(initialPos,target,timer);
+            yield return null;
+        }
+
+    }
+
+    private IEnumerator _Fade(CanvasGroup canvasGroup, float from, float to, float fadeTime) {
+        float timer = 0.0f;
+        canvasGroup.alpha = from;
+        while (timer <= 1) {
+            timer += Time.deltaTime / fadeTime;
+            canvasGroup.alpha = Mathf.Lerp(from, to, timer);
+            yield return null;
+        }
+        canvasGroup.alpha = to;
+    }
+
+    #endregion
 }

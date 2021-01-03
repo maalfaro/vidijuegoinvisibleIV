@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Enemigo 2
   Image: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  MaxHealth: 15
-  Health: 15
+  MaxHealth: 10
+  Health: 10
   Shield: 0
   Dodge: 0
   Cards:

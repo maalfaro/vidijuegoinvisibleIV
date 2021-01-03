@@ -85,5 +85,3 @@ public class CardUI : PoolObject, IDropHandler
     #endregion
 
 }
-
-

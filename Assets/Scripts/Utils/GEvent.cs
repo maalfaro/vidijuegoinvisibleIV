@@ -55,5 +55,6 @@ public class OnAddDodgeDice : GEvent<OnAddDodgeDice> {  }
 
 public class OnAddShieldDice : GEvent<OnAddShieldDice> { public int amount; }
 
+public class OnUpdateInventory : GEvent<OnUpdateInventory> { }
 
 public class OnRerollDice : GEvent<OnRerollDice> { public int rerollRemains; }
