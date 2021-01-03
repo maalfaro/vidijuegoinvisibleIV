@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 657cb75f16bd0ef4d84eafaa7e62f9e7, type: 3}
   m_Name: RecoveryHealthCard
   m_EditorClassIdentifier: 
+  Title: 
   Description: Recovery Health
+  Color: {r: 0.24029905, g: 0.6792453, b: 0.24029905, a: 1}
+  Condition:
+    number: 0
+    type: 0
+  movement: -500
+  multiplier: 1

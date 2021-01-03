@@ -6,8 +6,11 @@ using UnityEngine;
 public abstract class Card : ScriptableObject
 {
 
+    public string Title;
     public string Description;
+    public Color Color;
     public Condition Condition;
+    public float movement = 500f;
 
     public abstract void Initialize();
 

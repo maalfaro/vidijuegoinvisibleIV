@@ -23,6 +23,8 @@ public class EnemyManager : MonoBehaviour
     private Enemy enemyData;
     public Enemy EnemyData => enemyData;
 
+    private Coroutine coroutine;
+
     #endregion
 
     #region Initialize methods
@@ -70,7 +72,15 @@ public class EnemyManager : MonoBehaviour
         diceList.RemoveAt(0);
         cardsUI.RemoveAt(0);
 
-        StartCoroutine(_WaitFor(Random.Range(2f,4f),()=> DoAction(diceList, cardsUI)));
+        StopActions();
+        coroutine = StartCoroutine(_WaitFor(Random.Range(2f,4f),()=> DoAction(diceList, cardsUI)));
+    }
+
+    public void StopActions() {
+        if (coroutine != null) {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
     }
 
     public int ReceiveDamage(int damage) {

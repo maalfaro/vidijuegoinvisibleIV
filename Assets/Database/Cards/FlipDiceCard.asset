@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a49c30761409c243857cdff1c671d3a, type: 3}
   m_Name: FlipDiceCard
   m_EditorClassIdentifier: 
+  Title: 
   Description: Flip a Dice
+  Color: {r: 0.6784314, g: 0.6570866, b: 0.23921566, a: 1}
   Condition:
     number: 0
     type: 0
+  movement: -500

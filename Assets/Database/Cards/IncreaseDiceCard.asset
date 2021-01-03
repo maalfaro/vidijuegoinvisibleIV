@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed2369b33b4844f438555677ac4fe120, type: 3}
   m_Name: IncreaseDiceCard
   m_EditorClassIdentifier: 
+  Title: 
   Description: Increase dice number
+  Color: {r: 0.6784314, g: 0.6570866, b: 0.23921566, a: 1}
   Condition:
     number: 0
     type: 0
+  movement: -500
   increase: 1

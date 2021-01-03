@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd235f4b5280104390c4a9468475156, type: 3}
   m_Name: SplitDiceCard
   m_EditorClassIdentifier: 
+  Title: 
   Description: Split a dice
+  Color: {r: 0.6784314, g: 0.6570866, b: 0.23921566, a: 1}
   Condition:
     number: 0
     type: 0
+  movement: -500

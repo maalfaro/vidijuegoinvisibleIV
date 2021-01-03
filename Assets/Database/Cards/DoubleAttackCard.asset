@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0499755107d31ad49b638ec781b03ccc, type: 3}
   m_Name: DoubleAttackCard
   m_EditorClassIdentifier: 
+  Title: 
   Description: Attack x2
+  Color: {r: 0.6784314, g: 0.23921566, b: 0.25801092, a: 1}
+  Condition:
+    number: 0
+    type: 0
+  movement: 500
   multiplier: 2

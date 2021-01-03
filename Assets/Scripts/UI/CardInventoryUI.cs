@@ -15,6 +15,7 @@ public class CardInventoryUI : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     [SerializeField] private Transform diceTransform;
     [SerializeField] private TMPro.TextMeshProUGUI descriptionText;
     [SerializeField] private TMPro.TextMeshProUGUI conditionText;
+    [SerializeField] private TMPro.TextMeshProUGUI titleText;
 
     #endregion
 
@@ -29,7 +30,6 @@ public class CardInventoryUI : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     private bool isInventory;
     private int pos;
-    [SerializeField] private Color initColor;
 
     #endregion
 
@@ -41,7 +41,7 @@ public class CardInventoryUI : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         this.cardData = cardData;
         if (cardData != null) {
             this.cardData.Initialize();
-            image.color = initColor;
+            image.color = cardData.Color;
             diceTransform.gameObject.SetActive(true);
             UpdateUIData();
         } else {
@@ -55,6 +55,7 @@ public class CardInventoryUI : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void UpdateUIData() {
         descriptionText.text = cardData.Description;
         conditionText.text = GetConditionText();
+        titleText.text = cardData.Title;
     }
 
     #endregion

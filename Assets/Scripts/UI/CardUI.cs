@@ -11,10 +11,12 @@ public class CardUI : PoolObject, IDropHandler
     #region Inspector variables
 
     [SerializeField] private Image image;
-    [SerializeField] private Transform diceTransform;
+    [SerializeField] private Image diceImage;
+    [SerializeField] private TMPro.TextMeshProUGUI titleText;
     [SerializeField] private TMPro.TextMeshProUGUI descriptionText;
     [SerializeField] private TMPro.TextMeshProUGUI conditionText;
-
+    [SerializeField] private AnimationCurve animCurve;
+    [SerializeField] private Sprite emptyDice;
     #endregion
 
     #region Variables
@@ -22,21 +24,32 @@ public class CardUI : PoolObject, IDropHandler
     private Card cardData;
     public Card CardData => cardData;
 
-    public Vector3 Target => diceTransform.position;
+    public Vector3 Target => diceImage.transform.position;
+
+    private Vector3 initialPos;
+
+    
 
     #endregion
 
     #region Public methods
 
-    public void Initialize(Card cardData)
-    {
+    private void Awake() {
+        initialPos = transform.position;
+    }
+
+    public void Initialize(Card cardData) {
         this.cardData = cardData;
         this.cardData.Initialize();
+        diceImage.sprite = emptyDice;
         UpdateUIData();
     }
     
     public void UpdateUIData() {
+        titleText.text = cardData.Title;
         descriptionText.text = cardData.Description;
+        image.color = CardData.Color;
+        diceImage.sprite = emptyDice;
         conditionText.text = GetConditionText(); 
     }
 
@@ -67,7 +80,8 @@ public class CardUI : PoolObject, IDropHandler
         {
             Dice dice = data.pointerDrag.GetComponent<Dice>();
             if (cardData.CheckCondition(dice.Number)) {
-                gameObject.SetActive(false);
+                diceImage.sprite = Core.Instance.GetDiceImage(dice.Number);
+                StartCoroutine(_MoveCard(0.5f, CardData.movement));
                 new OnDiceUsed { Card = cardData, Dice = dice }.FireEvent();
             }        
         }
@@ -79,6 +93,24 @@ public class CardUI : PoolObject, IDropHandler
     }
     public override void ReleasePoolObject()
     {
+        gameObject.SetActive(false);
+    }
+
+    #endregion
+
+    #region Coroutines
+
+    private IEnumerator _MoveCard(float animTime, float movement) {
+
+        float timer = 0f;
+
+        while (timer < 1) {
+            timer += Time.deltaTime / animTime;
+            transform.position = initialPos + (Vector3.up * animCurve.Evaluate(timer) * movement);
+            yield return null;
+        }
+
+        transform.position = initialPos;
         gameObject.SetActive(false);
     }
 

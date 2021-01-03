@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     [Header("Managers")]
     [SerializeField] private EnemyManager enemyManager;
     [SerializeField] private Pool<Dice> enemyDicePool;
-    [SerializeField] private Transform enemyDiceParent;
     [SerializeField] private PlayerUI playerUI;
     [SerializeField] private RewardManager rewardManager;
     [SerializeField] private InventoryManager inventoryManager;
@@ -22,6 +21,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Dice dicePrefab;
     [SerializeField] private Transform diceParent;
     [SerializeField] private GameObject blocker;
+
+    [Header("Propiedades del tablero (Enemigo)")]
+    [SerializeField] private Dice enemyDicePrefab;
+    [SerializeField] private Transform enemyDiceParent;
 
     [Header("Botones")]
     [SerializeField] private Button endTurnButton;
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
         playerTurn = true;
 
         dicePool = new Pool<Dice>(dicePrefab, diceParent, 6);
-        enemyDicePool = new Pool<Dice>(dicePrefab, enemyDiceParent, 6);
+        enemyDicePool = new Pool<Dice>(enemyDicePrefab, enemyDiceParent, 6);
         
         enemyManager.Initialize(Core.Instance.CurrentLevel.enemyData);
         playerUI.Initialize();
@@ -187,10 +190,12 @@ public class GameManager : MonoBehaviour
     }
 
     private void PlayerWins() {
-        winPopUp.SetActive(true);
-        StartCoroutine(_MoveAnim(playerLayout, playerLayout.position + (Vector3.down * Screen.height), 0.5f));
-        StartCoroutine(_MoveAnim(enemyLayout, playerLayout.position + (Vector3.up * Screen.height), 0.5f));
-        StartCoroutine(_Fade(cardsCanvasGroup,1,0,0.5f));
+        StartCoroutine(_WaitFor(0.5f, () => {
+            winPopUp.SetActive(true);
+            StartCoroutine(_MoveAnim(playerLayout, playerLayout.position + (Vector3.down * Screen.height), 0.5f));
+            StartCoroutine(_MoveAnim(enemyLayout, playerLayout.position + (Vector3.up * Screen.height), 0.5f));
+            StartCoroutine(_Fade(cardsCanvasGroup,1,0,0.5f));
+        }));
 
         //Paramos el juego
         StartCoroutine(_WaitFor(3f, () => {
@@ -201,6 +206,15 @@ public class GameManager : MonoBehaviour
         }));
     }
 
+    private void PlayerLoses() {
+        enemyManager.StopActions();
+        StartCoroutine(_WaitFor(0.5f, () => {
+            losePopUp.SetActive(true);
+            StartCoroutine(_MoveAnim(playerLayout, playerLayout.position + (Vector3.down * Screen.height), 0.5f));
+            StartCoroutine(_MoveAnim(enemyLayout, playerLayout.position + (Vector3.up * Screen.height), 0.5f));
+            StartCoroutine(_Fade(cardsCanvasGroup, 1, 0, 0.5f));
+        }));
+    }
     private void ShowInventory() {
         inventoryManager.Initialize();
         inventoryManager.gameObject.SetActive(true);
@@ -212,14 +226,13 @@ public class GameManager : MonoBehaviour
 
     private void OnDiceUsedListener(OnDiceUsed data) {
         if (data.Card != null && data.Dice != null) {
-
             if (playerTurn) {
                 dicePool.ReleasePoolObject(data.Dice);
             } else {
                 enemyDicePool.ReleasePoolObject(data.Dice);
             }
-           
-            data.Card.Use(data.Dice.Number);
+
+            StartCoroutine(_WaitFor(0.5f, () => data.Card.Use(data.Dice.Number)));
         }
     }
 
@@ -266,9 +279,9 @@ public class GameManager : MonoBehaviour
             //Hacerle daño al player
             int playerHealth = playerUI.ReceiveDamage(data.damage);
             if (playerHealth <= 0) {
-                losePopUp.SetActive(true);
+                PlayerLoses();
             }
-        }
+        }        
     }
 
     private void OnSplitDiceListener(OnSplitDice data) {

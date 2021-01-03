@@ -8,19 +8,21 @@ public class Core : Singleton<Core>
 
     #region Variables
 
+    #region Inspector variables
+
     [SerializeField] private Sprite[] diceImages;
-
-    public Card[] SelectedCards => playerData.Cards;
-
+    [SerializeField] private Card[] initialCards;
     [SerializeField] private List<Enemy> enemiesPrefabs;
-    [SerializeField] private List<LevelData> levels;
-
-    [SerializeField] private LevelData currentLevel;
-    public LevelData CurrentLevel => currentLevel; 
-
- 
     [SerializeField] private PlayerData playerData;
+
+    #endregion
+
+    private List<LevelData> levels;
+    private LevelData currentLevel;
+
+    public LevelData CurrentLevel => currentLevel; 
     public PlayerData PlayerData => playerData;
+    public Card[] SelectedCards => playerData.Cards;
 
     #endregion
 
@@ -29,24 +31,19 @@ public class Core : Singleton<Core>
     protected override void InitInstance()
     {
         base.InitInstance();
-
         IntializePlayerData();
-        IntializeLevels();
-
-        GoToNextLevel();
+        GoToMenu();
     }
 
     #endregion
 
     #region Public methods
 
-    public void GoToMenu()
-    {
+    public void GoToMenu() {
         SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Single);
     }
 
     public void GoToNextLevel() {
-
         if (levels.Count > 0) {
             currentLevel = levels[0];
             levels.RemoveAt(0);
@@ -57,7 +54,9 @@ public class Core : Singleton<Core>
     }
 
     public void StartGame() {
+        IntializePlayerData();
         IntializeLevels();
+        GoToNextLevel();
     }
 
     public Sprite GetDiceImage(int number)
@@ -73,10 +72,10 @@ public class Core : Singleton<Core>
         playerData.Health = playerData.MaxHealth;
         playerData.Dodge = false;
         playerData.Shield = 0;
-        //playerData.Cards = new Card[playerData.Inventory.Count];
-        //for(int i=0;i< playerData.Cards.Length;i++) {
-        //    playerData.Cards[i] = playerData.Inventory[i];
-        //}
+        playerData.Inventory = new List<Card>();
+        playerData.Cards = new Card[4];
+        playerData.Cards[0] = initialCards[0];
+        playerData.Cards[1] = initialCards[1];
     }
 
     private void IntializeLevels() {

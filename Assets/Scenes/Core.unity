@@ -131,7 +131,6 @@ GameObject:
   m_Component:
   - component: {fileID: 601615124}
   - component: {fileID: 601615123}
-  - component: {fileID: 601615125}
   m_Layer: 0
   m_Name: Core
   m_TagString: Untagged
@@ -158,16 +157,14 @@ MonoBehaviour:
   - {fileID: -880043905950401250, guid: cd32e54282839b94f843a7b93177e47b, type: 3}
   - {fileID: -5478230469006044976, guid: cd32e54282839b94f843a7b93177e47b, type: 3}
   - {fileID: -2205863333093305225, guid: cd32e54282839b94f843a7b93177e47b, type: 3}
-  inventoryCards: []
+  initialCards:
+  - {fileID: 11400000, guid: bd1db8f9719885147b9649be6f23bdb0, type: 2}
+  - {fileID: 11400000, guid: 334a7c8fcea196540b88271c8e31c892, type: 2}
   enemiesPrefabs:
   - {fileID: 11400000, guid: ff0b56b9dbce98045bbece51c5a7ea94, type: 2}
   - {fileID: 11400000, guid: d2ed18dc098b3fd48b45c7910bd97364, type: 2}
   - {fileID: 11400000, guid: de052fe1dc8b10442809c2c63684bd18, type: 2}
   - {fileID: 11400000, guid: ddda0fc8aa2f1bf4d925b842b4ab9cb0, type: 2}
-  levels: []
-  currentLevel:
-    enemyData: {fileID: 0}
-    numDice: 0
   playerData: {fileID: 11400000, guid: 179fbcbf0f72f3a4894dd272ff6f9285, type: 2}
 --- !u!4 &601615124
 Transform:
@@ -183,18 +180,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &601615125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 601615122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70ff91e150d9bfc4aa153adbd13a64f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

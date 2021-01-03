@@ -12,6 +12,7 @@ public class Dice : PoolObject, IPointerDownHandler, IPointerUpHandler, IDragHan
     [SerializeField] private Image image;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Canvas canvas;
+    [SerializeField] private float movement;
 
     #endregion
 
@@ -20,15 +21,6 @@ public class Dice : PoolObject, IPointerDownHandler, IPointerUpHandler, IDragHan
     private Vector3 initialPos;
     private int number;
     public int Number => number;
-
-    #endregion
-
-    #region Monobehaviour methods
-
-    private void Start()
-    {
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
 
     #endregion
 
@@ -41,6 +33,8 @@ public class Dice : PoolObject, IPointerDownHandler, IPointerUpHandler, IDragHan
     public void Initialize(int number) {
         this.number = number;
         image.sprite = Core.Instance.GetDiceImage(number);
+        initialPos = transform.position;
+        StartCoroutine(_Move(0.3f));
     }
 
     #endregion
@@ -73,10 +67,33 @@ public class Dice : PoolObject, IPointerDownHandler, IPointerUpHandler, IDragHan
     public override void GetPoolObject()
     {
         gameObject.SetActive(true);
+        image.enabled = true;
     }
     public override void ReleasePoolObject()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        image.enabled = false;
+    }
+
+    #endregion
+
+    #region Coroutines
+
+    private IEnumerator _Move(float animTime) {
+
+        canvasGroup.alpha = 0;
+        yield return new WaitForSeconds(0.4f);
+        initialPos = transform.position;
+        Vector3 initPos = initialPos + (Vector3.down * movement);
+        float timer = 0f;
+        while (timer < 1) {
+            timer += Time.deltaTime / animTime;
+            transform.position = Vector3.Lerp(initPos, initialPos, timer);
+            canvasGroup.alpha = 1;
+            yield return null;
+        }
+        canvasGroup.alpha = 1;
+        transform.position = initialPos;
     }
 
     #endregion
