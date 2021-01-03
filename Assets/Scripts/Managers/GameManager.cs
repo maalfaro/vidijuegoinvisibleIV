@@ -175,13 +175,16 @@ public class GameManager : MonoBehaviour
             enemyManager.UpdateState();
 
             //Preparamos los datos del enemigo
-            List<CardUI> cardUIs = InitializeEnemyCards();
+            enemyCardUIs = InitializeEnemyCards();
             dicePool.ClearPool();
-            List<Dice> enemyDices = InitializeEnemyDices();
-            StartCoroutine(_WaitFor(2f,()=> enemyManager.DoAction(enemyDices, cardUIs)));
+            enemyDices = InitializeEnemyDices();
+            StartCoroutine(_WaitFor(2f,()=> enemyManager.DoAction(enemyDices, enemyCardUIs)));
         }
         
     }
+
+    List<CardUI> enemyCardUIs;
+        List < Dice > enemyDices;
 
     private IEnumerator _WaitFor(float waitTime, System.Action callback) {
 
@@ -230,6 +233,9 @@ public class GameManager : MonoBehaviour
                 dicePool.ReleasePoolObject(data.Dice);
             } else {
                 enemyDicePool.ReleasePoolObject(data.Dice);
+                enemyDices.Remove(data.Dice);
+                enemyCardUIs.RemoveAll(x => x.CardData.Equals(data.Card));
+                StartCoroutine(_WaitFor(3f, () => enemyManager.DoAction(enemyDices, enemyCardUIs)));
             }
 
             StartCoroutine(_WaitFor(0.5f, () => data.Card.Use(data.Dice.Number)));
@@ -294,6 +300,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < data.numbers.Count; i++) {
                 Dice dice = enemyDicePool.GetPoolObject();
                 dice.Initialize(data.numbers[i]);
+                enemyDices.Add(dice);
             }
         }
     }

@@ -64,16 +64,18 @@ public class EnemyManager : MonoBehaviour
             OnEndTurn?.Invoke();
             return;
         }
+        
+        diceList = diceList.OrderByDescending(x => x.Number).ToList();
 
-        diceList = diceList.OrderByDescending(x=>x.Number).ToList();
+        CardUI cardUI = CalculateNextCard(cardsUI, diceList);
+        //Si no tenemos más cartas de ataque o dodge o defensa me salgo
+        if (cardUI == null) {
+            OnEndTurn?.Invoke();
+            return;
+        }
 
-        StartCoroutine(_MoveTo(diceList[0], cardsUI[0]));
-       
-        diceList.RemoveAt(0);
-        cardsUI.RemoveAt(0);
-
-        StopActions();
-        coroutine = StartCoroutine(_WaitFor(Random.Range(2f,4f),()=> DoAction(diceList, cardsUI)));
+        //StopActions();
+        //coroutine = StartCoroutine(_WaitFor(Random.Range(2f,4f),()=> DoAction(diceList, cardsUI)));
     }
 
     public void StopActions() {
@@ -115,6 +117,10 @@ public class EnemyManager : MonoBehaviour
         SetHealth(enemyData.Health, enemyData.MaxHealth);
     }
 
+    //public void AddDice(Dice dice) {
+    //    dicelis
+    //}
+
     private IEnumerator _MoveTo(Dice dice, CardUI card) {
 
         float timer = 0.0f;
@@ -126,8 +132,7 @@ public class EnemyManager : MonoBehaviour
             yield return null;
         }
         dice.transform.position = card.Target;
-        card.gameObject.SetActive(false);
-        //Debug.LogError($"Usada la carta {card.CardData.Description} y el numero {dice.Number}");
+        card.MoveCardForEnemy();
         new OnDiceUsed { Card = card.CardData, Dice =  dice}.FireEvent();
     }
 
@@ -139,6 +144,83 @@ public class EnemyManager : MonoBehaviour
     #endregion
 
     #region Private methods
+
+    private CardUI CalculateNextCard(List<CardUI> cardsUI, List<Dice> diceList) {
+
+        //Compruebo si tengo cartar de incrementar dado, reroll o flip 
+        CardUI resultCard = cardsUI.Find(x => x.CardData.GetType().Equals(typeof(IncreaseDiceCard)) || x.CardData.GetType().Equals(typeof(RerollCard)) || x.CardData.GetType().Equals(typeof(FlipDiceCard)));
+
+        //Comprobamos que la carta no sea nula
+        if (resultCard != null) {
+            //Ordenamos de mayor a menor y cogemos el más grande distinto de 6
+            if (resultCard.CardData.GetType().Equals(typeof(IncreaseDiceCard))) {
+                for(int i = 0; i < diceList.Count; i++) {
+                    if (diceList[i].Number < 6) {
+                        if (resultCard.CardData.CheckCondition(diceList[i].Number)) {
+                            StartCoroutine(_MoveTo(diceList[i], resultCard));
+                            diceList.RemoveAt(i);
+                            cardsUI.Remove(resultCard);
+                            return resultCard;
+                        }
+                    }
+                }
+            }else {
+                Dice dice = diceList.Last();
+                if (dice != null) {
+                    if (resultCard.CardData.CheckCondition(dice.Number)) {
+                        StartCoroutine(_MoveTo(dice, resultCard));
+                        diceList.Remove(dice);
+                        cardsUI.Remove(resultCard);
+                        return resultCard;
+                    }       
+                }           
+            }
+        }
+        
+        // Buscamos si tenemos cartas de ataque, defensa o esquivar para jugar contra el jugador
+        resultCard = cardsUI.Find(x => x.CardData.GetType().Equals(typeof(BasicAttackCard)) || x.CardData.GetType().Equals(typeof(ShieldCard)) || x.CardData.GetType().Equals(typeof(DodgeCard)));
+
+        //En el random usamos la posibilidad para que el 40% de las veces use el dado de mayor valor y el resto haga un random
+        Dice randomDice = Random.Range(0,10)>5 ? diceList[0] : diceList[Random.Range(0, diceList.Count)];
+
+        if (resultCard != null) {
+            //Si la carta no cumple la condicion la quitamos y buscamos la siguiente
+            if (!resultCard.CardData.CheckCondition(randomDice.Number)) {
+                cardsUI.Remove(resultCard);
+                resultCard = cardsUI.Find(x => x.CardData.GetType().Equals(typeof(BasicAttackCard)) || x.CardData.GetType().Equals(typeof(ShieldCard)) || x.CardData.GetType().Equals(typeof(DodgeCard)));
+            }
+
+            if (resultCard != null) {
+                // Si es una carta de dodge lanzamos un dado para ver si se usa o no
+                if (resultCard.CardData.GetType().Equals(typeof(DodgeCard))) {
+                    if (Random.Range(0, 10) > 5) {
+                        if (resultCard.CardData.CheckCondition(randomDice.Number)) {
+                            StartCoroutine(_MoveTo(randomDice, resultCard));
+                            diceList.Remove(randomDice);
+                            cardsUI.Remove(resultCard);
+                            return resultCard;
+                        }
+                    }
+                } else {
+                    StartCoroutine(_MoveTo(randomDice, resultCard));
+                    diceList.Remove(randomDice);
+                    cardsUI.Remove(resultCard);
+                    return resultCard;
+                }
+            }
+        }
+
+        resultCard = cardsUI[Random.Range(0, diceList.Count)];
+
+        if (resultCard!=null && resultCard.CardData.CheckCondition(randomDice.Number)) {
+            StartCoroutine(_MoveTo(randomDice, resultCard));
+            diceList.Remove(randomDice);
+            cardsUI.Remove(resultCard);
+            return resultCard;
+        }
+
+        return null;
+    }
 
     private void SetImage(Sprite avatar)
     {

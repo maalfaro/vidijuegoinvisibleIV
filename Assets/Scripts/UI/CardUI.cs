@@ -53,6 +53,10 @@ public class CardUI : PoolObject, IDropHandler
         conditionText.text = GetConditionText(); 
     }
 
+    public void MoveCardForEnemy() {
+        StartCoroutine(_MoveCard(0.5f, -CardData.movement));
+    }
+
     #endregion
 
     #region Private methods

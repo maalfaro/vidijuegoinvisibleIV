@@ -82,7 +82,7 @@ public class Core : Singleton<Core>
         levels = new List<LevelData>();
         enemiesPrefabs.Shuffle();
 
-        for(int i = 0; i < enemiesPrefabs.Count; i++) {
+        for (int i = 0; i < enemiesPrefabs.Count; i++) {
             LevelData level = new LevelData();
             level.enemyData = (Enemy) enemiesPrefabs[i].Clone();
             level.numDice = i < 2 ? 2 : i < 6 ? 3 : 4;
