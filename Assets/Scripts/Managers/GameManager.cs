@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerUI playerUI;
     [SerializeField] private RewardManager rewardManager;
     [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private TextManager textManager;
 
     [Header("Propiedades del tablero")]
     [SerializeField] private CardUI[] cardPool;
@@ -59,6 +60,9 @@ public class GameManager : MonoBehaviour
         
         enemyManager.Initialize(Core.Instance.CurrentLevel.enemyData);
         playerUI.Initialize();
+        textManager.Initialize();
+
+        StartCoroutine(_WaitFor(3, () => textManager.ShowText(5, "PRUEBA DE TEXTO DE PLAYER", true)));
 
         InitializePlayerDices();
     }
@@ -169,7 +173,9 @@ public class GameManager : MonoBehaviour
             playerUI.ResetShieldAndDodge();
             playerUI.UpdateState();
             blocker.SetActive(false);
+            endTurnButton.gameObject.SetActive(true);
         } else {
+            endTurnButton.gameObject.SetActive(false);
             blocker.SetActive(true);
             enemyManager.ResetShieldAndDodge();
             enemyManager.UpdateState();
@@ -211,6 +217,7 @@ public class GameManager : MonoBehaviour
 
     private void PlayerLoses() {
         enemyManager.StopActions();
+        UnsuscribeEvents();
         StartCoroutine(_WaitFor(0.5f, () => {
             losePopUp.SetActive(true);
             StartCoroutine(_MoveAnim(playerLayout, playerLayout.position + (Vector3.down * Screen.height), 0.5f));
@@ -218,6 +225,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(_Fade(cardsCanvasGroup, 1, 0, 0.5f));
         }));
     }
+
     private void ShowInventory() {
         inventoryManager.Initialize();
         inventoryManager.gameObject.SetActive(true);
@@ -258,8 +266,10 @@ public class GameManager : MonoBehaviour
                 if (cardPool[i].CardData == null) continue;
                 if (cardPool[i].CardData.GetType().Equals(typeof(RerollCard)))
                 {
-                    cardPool[i].gameObject.SetActive(true);
-                    cardPool[i].UpdateUIData();
+                    StartCoroutine(_WaitFor(0.25f, () => {
+                        cardPool[i].gameObject.SetActive(true);
+                        cardPool[i].UpdateUIData();
+                    }));
                     break;
                 }
             }

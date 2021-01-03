@@ -37,7 +37,7 @@ public class PlayerUI : MonoBehaviour
             return playerData.Health;
         }
 
-        shakeTransform.Begin();
+        //shakeTransform.Begin();
 
         //Si el escudo es menor que el daño que recibimos quitamos al daño el escudo y hacemos el daño
         //sino le quitamos al escudo el daño que recibimos y salimos sin recibir daño.

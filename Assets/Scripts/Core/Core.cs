@@ -85,6 +85,7 @@ public class Core : Singleton<Core>
         for (int i = 0; i < enemiesPrefabs.Count; i++) {
             LevelData level = new LevelData();
             level.enemyData = (Enemy) enemiesPrefabs[i].Clone();
+            level.enemyData.MaxHealth = i < 2 ? 10 : i < 6 ? 15 : 20;
             level.numDice = i < 2 ? 2 : i < 6 ? 3 : 4;
             levels.Add(level);
         }

@@ -94,7 +94,7 @@ public class EnemyManager : MonoBehaviour
             return enemyData.Health;
         }
 
-        shakeTransform.Begin();
+        //shakeTransform.Begin();
 
         //Si el escudo es menor que el daño que recibimos quitamos al daño el escudo y hacemos el daño
         //sino le quitamos al escudo el daño que recibimos y salimos sin recibir daño.
@@ -209,6 +209,7 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
+        if (cardsUI.Count == 0) return null;
         resultCard = cardsUI[Random.Range(0, diceList.Count)];
 
         if (resultCard!=null && resultCard.CardData.CheckCondition(randomDice.Number)) {

@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class ShakeTransformS : MonoBehaviour {
+
 	[Header("Info")]
 	private Vector3 _startPos;
 	private float _timer;
