@@ -16,6 +16,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI nameText;
     [SerializeField] private TMPro.TextMeshProUGUI healthText;
     [SerializeField] private TMPro.TextMeshProUGUI stateText;
+    [SerializeField] private ShakeTransformS shakeTransform;
 
     [Header("Animaciones")]
     [SerializeField] private float moveTime = 0.3f;
@@ -93,6 +94,8 @@ public class EnemyManager : MonoBehaviour
             return enemyData.Health;
         }
 
+        shakeTransform.Begin();
+
         //Si el escudo es menor que el daño que recibimos quitamos al daño el escudo y hacemos el daño
         //sino le quitamos al escudo el daño que recibimos y salimos sin recibir daño.
         if (damage >= enemyData.Shield) {
@@ -116,10 +119,6 @@ public class EnemyManager : MonoBehaviour
         enemyData.Health = enemyData.Health > enemyData.MaxHealth ? enemyData.MaxHealth : enemyData.Health;
         SetHealth(enemyData.Health, enemyData.MaxHealth);
     }
-
-    //public void AddDice(Dice dice) {
-    //    dicelis
-    //}
 
     private IEnumerator _MoveTo(Dice dice, CardUI card) {
 

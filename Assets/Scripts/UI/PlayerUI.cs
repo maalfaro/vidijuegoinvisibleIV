@@ -14,6 +14,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI nameText;
     [SerializeField] private TMPro.TextMeshProUGUI healthText;
     [SerializeField] private TMPro.TextMeshProUGUI stateText;
+    [SerializeField] private ShakeTransformS shakeTransform;
 
     #endregion
 
@@ -35,6 +36,8 @@ public class PlayerUI : MonoBehaviour
             SetState(playerData.Shield, playerData.Dodge);
             return playerData.Health;
         }
+
+        shakeTransform.Begin();
 
         //Si el escudo es menor que el daño que recibimos quitamos al daño el escudo y hacemos el daño
         //sino le quitamos al escudo el daño que recibimos y salimos sin recibir daño.

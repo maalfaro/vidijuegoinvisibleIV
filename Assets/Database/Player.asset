@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: Assembly-CSharp::PlayerData
   Name: Ruly
-  Image: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  Image: {fileID: 21300000, guid: 073bab8da04036447b54e69dd61d0f6c, type: 3}
   MaxHealth: 30
   Health: 21
   Shield: 0
