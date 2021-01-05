@@ -9,6 +9,9 @@ using UnityEditor;
 [System.Serializable]
 public class Enemy : PlayerData {
 
+    public List<DialogData> dialogs;
+
+
 #if UNITY_EDITOR
     [MenuItem("Assets/Create/Debug/Enemy", false, 1022)]
     static void CreateEnemyAsset()

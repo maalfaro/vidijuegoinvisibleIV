@@ -14,6 +14,7 @@ public class Core : Singleton<Core>
     [SerializeField] private Card[] initialCards;
     [SerializeField] private List<Enemy> enemiesPrefabs;
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private List<Enemy> MigsData;
 
     #endregion
 
@@ -50,6 +51,7 @@ public class Core : Singleton<Core>
             SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Single);
         } else {
             //Ir al nivel fin del juego
+            SceneManager.LoadSceneAsync("EndScene", LoadSceneMode.Single);
         }
     }
 
@@ -75,20 +77,25 @@ public class Core : Singleton<Core>
         playerData.Inventory = new List<Card>();
         playerData.Cards = new Card[4];
         playerData.Cards[0] = initialCards[0];
-        playerData.Cards[1] = initialCards[1];
+        //playerData.Cards[1] = initialCards[1];
     }
 
     private void IntializeLevels() {
         levels = new List<LevelData>();
         enemiesPrefabs.Shuffle();
-
+        enemiesPrefabs.Insert(0, MigsData[0]);
         for (int i = 0; i < enemiesPrefabs.Count; i++) {
             LevelData level = new LevelData();
             level.enemyData = (Enemy) enemiesPrefabs[i].Clone();
-            level.enemyData.MaxHealth = i < 2 ? 10 : i < 6 ? 15 : 20;
-            level.numDice = i < 2 ? 2 : i < 6 ? 3 : 4;
+            level.enemyData.MaxHealth = i < 1 ? 6 : i < 3 ? 10 : i < 7 ? 15 : 20;
+            level.numDice = i < 1 ? 1 : i < 3 ? 2 : i < 7 ? 3 : 4;
             levels.Add(level);
         }
+        LevelData levelBoss = new LevelData();
+        levelBoss.enemyData = (Enemy)MigsData[1].Clone();
+        levelBoss.enemyData.MaxHealth = 30;
+        levelBoss.numDice = 4;
+        levels.Add(levelBoss);
     }
 
     #endregion

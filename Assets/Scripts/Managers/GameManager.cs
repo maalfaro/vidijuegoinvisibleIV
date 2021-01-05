@@ -31,12 +31,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button endTurnButton;
     [SerializeField] private Button gameOverButton;
     [SerializeField] private Button exitButton;
+    [SerializeField] private Button showExitButton;
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button inventoryButton;
 
     [Header("Popups")]
     [SerializeField] private GameObject winPopUp;
     [SerializeField] private GameObject losePopUp;
+    [SerializeField] private TMPro.TextMeshProUGUI winDescriptionText;
 
     [Header("Layouts")]
     [SerializeField] private Transform playerLayout;
@@ -60,9 +62,15 @@ public class GameManager : MonoBehaviour
         
         enemyManager.Initialize(Core.Instance.CurrentLevel.enemyData);
         playerUI.Initialize();
-        textManager.Initialize();
+        textManager.Initialize(Core.Instance.CurrentLevel.enemyData.dialogs);
 
-        StartCoroutine(_WaitFor(3, () => textManager.ShowText(5, "PRUEBA DE TEXTO DE PLAYER", true)));
+        if (Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Angel")) {
+            winDescriptionText.text = string.Empty;
+        } else if (Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Demonio")) {
+            winDescriptionText.text = $"Has liberado a Mig El Demonio";
+        } else {
+            winDescriptionText.text = $"Has liberado a  {Core.Instance.CurrentLevel.enemyData.Name}";
+        }
 
         InitializePlayerDices();
     }
@@ -199,7 +207,10 @@ public class GameManager : MonoBehaviour
     }
 
     private void PlayerWins() {
+        endTurnButton.interactable = false;
+        showExitButton.interactable = false;
         StartCoroutine(_WaitFor(0.5f, () => {
+            textManager.StopAllTexts();
             winPopUp.SetActive(true);
             StartCoroutine(_MoveAnim(playerLayout, playerLayout.position + (Vector3.down * Screen.height), 0.5f));
             StartCoroutine(_MoveAnim(enemyLayout, playerLayout.position + (Vector3.up * Screen.height), 0.5f));
@@ -216,9 +227,12 @@ public class GameManager : MonoBehaviour
     }
 
     private void PlayerLoses() {
+        endTurnButton.interactable = false;
+        showExitButton.interactable = false;
         enemyManager.StopActions();
         UnsuscribeEvents();
         StartCoroutine(_WaitFor(0.5f, () => {
+            textManager.StopAllTexts();
             losePopUp.SetActive(true);
             StartCoroutine(_MoveAnim(playerLayout, playerLayout.position + (Vector3.down * Screen.height), 0.5f));
             StartCoroutine(_MoveAnim(enemyLayout, playerLayout.position + (Vector3.up * Screen.height), 0.5f));

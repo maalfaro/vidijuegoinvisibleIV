@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: MigElAngel
   m_EditorClassIdentifier: 
   Name: Mig El Angel
-  Image: {fileID: 21300000, guid: a54f2ec5eb30a8e4d9f1c0af917d9c25, type: 3}
-  MaxHealth: 10
-  Health: 10
+  Image: {fileID: 21300000, guid: b6f9b20dab8f37349bdb92d8b30a3f18, type: 3}
+  MaxHealth: 6
+  Health: 6
   Shield: 0
   Dodge: 0
   Cards:
-  - {fileID: 11400000, guid: bd1db8f9719885147b9649be6f23bdb0, type: 2}
-  - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
-  - {fileID: 11400000, guid: 88a4e36a91e57274db422358862f5275, type: 2}
+  - {fileID: 11400000, guid: 334a7c8fcea196540b88271c8e31c892, type: 2}
   Inventory:
-  - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
-  - {fileID: 11400000, guid: 88a4e36a91e57274db422358862f5275, type: 2}
+  - {fileID: 11400000, guid: 334a7c8fcea196540b88271c8e31c892, type: 2}
+  dialogs:
+  - {fileID: 11400000, guid: 16bda04069149474880b072dc15c54f9, type: 2}
+  - {fileID: 11400000, guid: c9eb692ed7ee97945b66c8a00f717470, type: 2}
+  - {fileID: 11400000, guid: 0f269af29c41a564aaa6fc361d15c76b, type: 2}
+  - {fileID: 11400000, guid: e45aa06bd6daf954fb95c4b610da23fe, type: 2}

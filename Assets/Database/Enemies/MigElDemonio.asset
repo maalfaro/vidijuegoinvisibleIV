@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MigElDemonio
   m_EditorClassIdentifier: 
   Name: Mig El Demonio
-  Image: {fileID: 21300000, guid: a54f2ec5eb30a8e4d9f1c0af917d9c25, type: 3}
+  Image: {fileID: 21300000, guid: 7111d9b73d8ed3c4c8888e6331acd1f9, type: 3}
   MaxHealth: 10
   Health: 10
   Shield: 0
@@ -21,7 +21,7 @@ MonoBehaviour:
   Cards:
   - {fileID: 11400000, guid: bd1db8f9719885147b9649be6f23bdb0, type: 2}
   - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
-  - {fileID: 11400000, guid: 88a4e36a91e57274db422358862f5275, type: 2}
-  Inventory:
-  - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
-  - {fileID: 11400000, guid: 88a4e36a91e57274db422358862f5275, type: 2}
+  - {fileID: 11400000, guid: 0699d5950a856354781fbfbd7b031484, type: 2}
+  - {fileID: 11400000, guid: 3043a57c53d9d2b40998b38b0b3df4ba, type: 2}
+  Inventory: []
+  dialogs: []

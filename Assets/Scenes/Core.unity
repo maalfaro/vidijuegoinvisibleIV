@@ -161,11 +161,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd1db8f9719885147b9649be6f23bdb0, type: 2}
   - {fileID: 11400000, guid: 334a7c8fcea196540b88271c8e31c892, type: 2}
   enemiesPrefabs:
-  - {fileID: 11400000, guid: ff0b56b9dbce98045bbece51c5a7ea94, type: 2}
-  - {fileID: 11400000, guid: d2ed18dc098b3fd48b45c7910bd97364, type: 2}
   - {fileID: 11400000, guid: de052fe1dc8b10442809c2c63684bd18, type: 2}
+  - {fileID: 11400000, guid: d2ed18dc098b3fd48b45c7910bd97364, type: 2}
   - {fileID: 11400000, guid: ddda0fc8aa2f1bf4d925b842b4ab9cb0, type: 2}
+  - {fileID: 11400000, guid: ff0b56b9dbce98045bbece51c5a7ea94, type: 2}
+  - {fileID: 11400000, guid: 3012e124a81471540afd75597177415d, type: 2}
+  - {fileID: 11400000, guid: 62b06ccf543625a4db6e39152cb9e4d5, type: 2}
+  - {fileID: 11400000, guid: a040d997b3b66ee4eb4415830dd52205, type: 2}
   playerData: {fileID: 11400000, guid: 179fbcbf0f72f3a4894dd272ff6f9285, type: 2}
+  MigsData:
+  - {fileID: 11400000, guid: cb13dc65798f6dc43b64142d0ef437b3, type: 2}
+  - {fileID: 11400000, guid: 300efa11a89350347812418aebfd06cf, type: 2}
 --- !u!4 &601615124
 Transform:
   m_ObjectHideFlags: 0

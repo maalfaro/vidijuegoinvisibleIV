@@ -15,12 +15,12 @@ MonoBehaviour:
   Name: Ruly
   Image: {fileID: 21300000, guid: 073bab8da04036447b54e69dd61d0f6c, type: 3}
   MaxHealth: 30
-  Health: 21
+  Health: 14
   Shield: 0
   Dodge: 0
   Cards:
   - {fileID: 11400000, guid: bd1db8f9719885147b9649be6f23bdb0, type: 2}
-  - {fileID: 11400000, guid: 334a7c8fcea196540b88271c8e31c892, type: 2}
-  - {fileID: 11400000, guid: 3043a57c53d9d2b40998b38b0b3df4ba, type: 2}
-  - {fileID: 11400000, guid: 9b31b46f03350c04282094ca1d8e5bb9, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   Inventory: []

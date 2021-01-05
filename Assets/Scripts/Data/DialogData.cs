@@ -10,6 +10,10 @@ using UnityEditor;
 public class DialogData : ScriptableObject
 {
 
+    public bool IsPlayer;
+    public float TextTime;
+    public float WaitTime;
+    public string Dialog;
 
 
 #if UNITY_EDITOR
