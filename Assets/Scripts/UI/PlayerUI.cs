@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.UI.Extensions;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -14,7 +14,8 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI nameText;
     [SerializeField] private TMPro.TextMeshProUGUI healthText;
     [SerializeField] private TMPro.TextMeshProUGUI stateText;
-    [SerializeField] private ShakeTransformS shakeTransform;
+    [SerializeField] private Shake shake;
+    [SerializeField] private UIParticleSystem particlesHealth;
 
     #endregion
 
@@ -37,12 +38,13 @@ public class PlayerUI : MonoBehaviour
             return playerData.Health;
         }
 
-        //shakeTransform.Begin();
+        shake.BeginShake();
 
         //Si el escudo es menor que el daño que recibimos quitamos al daño el escudo y hacemos el daño
         //sino le quitamos al escudo el daño que recibimos y salimos sin recibir daño.
         if (damage >= playerData.Shield) {
             damage -= playerData.Shield;
+            playerData.Shield = 0;
         } else {
             playerData.Shield -= damage;
             SetState(playerData.Shield, playerData.Dodge);
@@ -58,6 +60,8 @@ public class PlayerUI : MonoBehaviour
     }
 
     public void RecoveryHealth(int recoveryHealth) {
+        particlesHealth.StopParticleEmission();
+        particlesHealth.StartParticleEmission();
         PlayerData playerData = Core.Instance.PlayerData;
         playerData.Health += recoveryHealth;
         playerData.Health = playerData.Health > playerData.MaxHealth ? playerData.MaxHealth : playerData.Health;

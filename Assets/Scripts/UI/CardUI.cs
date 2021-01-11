@@ -17,18 +17,17 @@ public class CardUI : PoolObject, IDropHandler
     [SerializeField] private TMPro.TextMeshProUGUI conditionText;
     [SerializeField] private AnimationCurve animCurve;
     [SerializeField] private Sprite emptyDice;
+
     #endregion
 
     #region Variables
 
     private Card cardData;
+    private Vector3 initialPos;
+
     public Card CardData => cardData;
 
     public Vector3 Target => diceImage.transform.position;
-
-    private Vector3 initialPos;
-
-    
 
     #endregion
 
@@ -53,7 +52,8 @@ public class CardUI : PoolObject, IDropHandler
         conditionText.text = GetConditionText(); 
     }
 
-    public void MoveCardForEnemy() {
+    public void MoveCardForEnemy(int number) {
+        diceImage.sprite = Core.Instance.GetDiceImage(number);
         StartCoroutine(_MoveCard(0.5f, -CardData.movement));
     }
 
@@ -95,6 +95,7 @@ public class CardUI : PoolObject, IDropHandler
     {
         gameObject.SetActive(true);
     }
+
     public override void ReleasePoolObject()
     {
         gameObject.SetActive(false);
@@ -107,7 +108,7 @@ public class CardUI : PoolObject, IDropHandler
     private IEnumerator _MoveCard(float animTime, float movement) {
 
         float timer = 0f;
-
+        SoundsManager.Instance.PlaySound("woosh",1f,0.75f);
         while (timer < 1) {
             timer += Time.deltaTime / animTime;
             transform.position = initialPos + (Vector3.up * animCurve.Evaluate(timer) * movement);

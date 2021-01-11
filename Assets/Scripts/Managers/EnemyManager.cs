@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.UI.Extensions;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI nameText;
     [SerializeField] private TMPro.TextMeshProUGUI healthText;
     [SerializeField] private TMPro.TextMeshProUGUI stateText;
-    [SerializeField] private ShakeTransformS shakeTransform;
+    [SerializeField] private Shake shake;
+    [SerializeField] private UIParticleSystem particlesHealth;
 
     [Header("Animaciones")]
     [SerializeField] private float moveTime = 0.3f;
@@ -74,9 +76,6 @@ public class EnemyManager : MonoBehaviour
             OnEndTurn?.Invoke();
             return;
         }
-
-        //StopActions();
-        //coroutine = StartCoroutine(_WaitFor(Random.Range(2f,4f),()=> DoAction(diceList, cardsUI)));
     }
 
     public void StopActions() {
@@ -84,6 +83,7 @@ public class EnemyManager : MonoBehaviour
             StopCoroutine(coroutine);
             coroutine = null;
         }
+        StopAllCoroutines();
     }
 
     public int ReceiveDamage(int damage) {
@@ -94,12 +94,13 @@ public class EnemyManager : MonoBehaviour
             return enemyData.Health;
         }
 
-        //shakeTransform.Begin();
+        shake.BeginShake();
 
         //Si el escudo es menor que el daño que recibimos quitamos al daño el escudo y hacemos el daño
         //sino le quitamos al escudo el daño que recibimos y salimos sin recibir daño.
         if (damage >= enemyData.Shield) {
             damage -= enemyData.Shield;
+            enemyData.Shield = 0;
         } else {
             enemyData.Shield -= damage;
             SetState(enemyData.Shield, enemyData.Dodge);
@@ -115,6 +116,8 @@ public class EnemyManager : MonoBehaviour
     }
 
     public void RecoveryHealth(int recoveryHealth) {
+        particlesHealth.StopParticleEmission();
+        particlesHealth.StartParticleEmission();
         enemyData.Health += recoveryHealth;
         enemyData.Health = enemyData.Health > enemyData.MaxHealth ? enemyData.MaxHealth : enemyData.Health;
         SetHealth(enemyData.Health, enemyData.MaxHealth);
@@ -131,7 +134,7 @@ public class EnemyManager : MonoBehaviour
             yield return null;
         }
         dice.transform.position = card.Target;
-        card.MoveCardForEnemy();
+        card.MoveCardForEnemy(dice.Number);
         new OnDiceUsed { Card = card.CardData, Dice =  dice}.FireEvent();
     }
 
@@ -209,8 +212,8 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
-        if (cardsUI.Count == 0) return null;
-        resultCard = cardsUI[Random.Range(0, diceList.Count)];
+        if (cardsUI.Count == 0 || diceList.Count==0) return null;
+        resultCard = cardsUI[Random.Range(0, cardsUI.Count)];
 
         if (resultCard!=null && resultCard.CardData.CheckCondition(randomDice.Number)) {
             StartCoroutine(_MoveTo(randomDice, resultCard));

@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasGroup cardsCanvasGroup; 
 
     private bool playerTurn;
+    private List<CardUI> enemyCardUIs;
+    private List<Dice> enemyDices;
 
     #endregion
 
@@ -67,9 +69,9 @@ public class GameManager : MonoBehaviour
         if (Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Angel")) {
             winDescriptionText.text = string.Empty;
         } else if (Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Demonio")) {
-            winDescriptionText.text = $"Has liberado a Mig El Demonio";
+            winDescriptionText.text = $"Has derrotado a Mig El Demonio";
         } else {
-            winDescriptionText.text = $"Has liberado a  {Core.Instance.CurrentLevel.enemyData.Name}";
+            winDescriptionText.text = $"Has liberado a {Core.Instance.CurrentLevel.enemyData.Name}";
         }
 
         InitializePlayerDices();
@@ -81,9 +83,9 @@ public class GameManager : MonoBehaviour
 
     private void InitializeButtons() {
         endTurnButton.onClick.AddListener(EndTurn);
-        gameOverButton.onClick.AddListener(Core.Instance.GoToMenu);
-        exitButton.onClick.AddListener(Core.Instance.GoToMenu);
-        nextLevelButton.onClick.AddListener(Core.Instance.GoToNextLevel);
+        gameOverButton.onClick.AddListener(PlayClickAndGoToMenu);
+        exitButton.onClick.AddListener(PlayClickAndGoToMenu);
+        nextLevelButton.onClick.AddListener(PlayClickAndGoToNextLevel);
         inventoryButton.onClick.AddListener(ShowInventory);
         nextLevelButton.gameObject.SetActive(false);
         inventoryButton.gameObject.SetActive(false);
@@ -156,7 +158,15 @@ public class GameManager : MonoBehaviour
         dicePool.ClearPool();
         for (int i = 0; i < Core.Instance.CurrentLevel.numDice; i++) {
             Dice dice = dicePool.GetPoolObject();
-            dice.Initialize();
+            
+            // Si estamos jugando contra "Mig El Angel" que es el tutorial "trucamos" los dados para que su valor sea entre 3, 4 o 5
+            // para que el jugador los tenga que usar 2 veces en el tutorial.
+            if (Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Angel")) {
+                dice.Initialize(Random.Range(3, 6));
+            } else {
+                dice.Initialize();
+            }
+               
         }
     }
 
@@ -183,6 +193,7 @@ public class GameManager : MonoBehaviour
             blocker.SetActive(false);
             endTurnButton.gameObject.SetActive(true);
         } else {
+            SoundsManager.Instance.PlaySound("click");
             endTurnButton.gameObject.SetActive(false);
             blocker.SetActive(true);
             enemyManager.ResetShieldAndDodge();
@@ -197,19 +208,21 @@ public class GameManager : MonoBehaviour
         
     }
 
-    List<CardUI> enemyCardUIs;
-        List < Dice > enemyDices;
+    private void PlayClickAndGoToMenu() {
+        SoundsManager.Instance.PlaySound("click");
+        Core.Instance.GoToMenu();
+    }
 
-    private IEnumerator _WaitFor(float waitTime, System.Action callback) {
-
-        yield return new WaitForSeconds(waitTime);
-        callback?.Invoke();
+    private void PlayClickAndGoToNextLevel() {
+        SoundsManager.Instance.PlaySound("click", 1);
+        Core.Instance.GoToNextLevel();
     }
 
     private void PlayerWins() {
         endTurnButton.interactable = false;
         showExitButton.interactable = false;
         StartCoroutine(_WaitFor(0.5f, () => {
+            SoundsManager.Instance.PlaySound("levelCompleted");
             textManager.StopAllTexts();
             winPopUp.SetActive(true);
             StartCoroutine(_MoveAnim(playerLayout, playerLayout.position + (Vector3.down * Screen.height), 0.5f));
@@ -232,8 +245,10 @@ public class GameManager : MonoBehaviour
         enemyManager.StopActions();
         UnsuscribeEvents();
         StartCoroutine(_WaitFor(0.5f, () => {
+            SoundsManager.Instance.PlaySound("gameOver");
             textManager.StopAllTexts();
             losePopUp.SetActive(true);
+            blocker.SetActive(false);
             StartCoroutine(_MoveAnim(playerLayout, playerLayout.position + (Vector3.down * Screen.height), 0.5f));
             StartCoroutine(_MoveAnim(enemyLayout, playerLayout.position + (Vector3.up * Screen.height), 0.5f));
             StartCoroutine(_Fade(cardsCanvasGroup, 1, 0, 0.5f));
@@ -241,6 +256,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void ShowInventory() {
+        SoundsManager.Instance.PlaySound("click");
         inventoryManager.Initialize();
         inventoryManager.gameObject.SetActive(true);
     }
@@ -257,10 +273,17 @@ public class GameManager : MonoBehaviour
                 enemyDicePool.ReleasePoolObject(data.Dice);
                 enemyDices.Remove(data.Dice);
                 enemyCardUIs.RemoveAll(x => x.CardData.Equals(data.Card));
-                StartCoroutine(_WaitFor(3f, () => enemyManager.DoAction(enemyDices, enemyCardUIs)));
+                StartCoroutine(_WaitFor(3f, DoEnemyAction));
+                
             }
 
             StartCoroutine(_WaitFor(0.5f, () => data.Card.Use(data.Dice.Number)));
+        }
+    }
+
+    private void DoEnemyAction() {
+        if (Core.Instance.PlayerData.Health > 0) {
+            enemyManager.DoAction(enemyDices, enemyCardUIs);
         }
     }
 
@@ -292,6 +315,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void OnRecoveryHealthListener(OnRecoveryHealth data) {
+        SoundsManager.Instance.PlaySound("health");
         if (playerTurn) {
             playerUI.RecoveryHealth(data.recoveryHealth);
         } else {
@@ -300,6 +324,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void OnDamageReceivedListener(OnDamageReceived data) {
+        SoundsManager.Instance.PlaySound("attack");
         if (playerTurn) {
             int enemyHealth = enemyManager.ReceiveDamage(data.damage);
             if (enemyHealth <= 0) {
@@ -375,6 +400,13 @@ public class GameManager : MonoBehaviour
         }
         canvasGroup.alpha = to;
     }
+
+    private IEnumerator _WaitFor(float waitTime, System.Action callback) {
+
+        yield return new WaitForSeconds(waitTime);
+        callback?.Invoke();
+    }
+
 
     #endregion
 }

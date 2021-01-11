@@ -41,6 +41,8 @@ public class RewardManager : MonoBehaviour
         PlayerData playerData = Core.Instance.PlayerData;
         bool added = false;
 
+        SoundsManager.Instance.PlaySound("switchOn");
+
         //Compruebo todas las cartas y si alguna es nula le pongo la carta en la mano, sino al inventario
         for (int i=0;i< playerData.Cards.Length; i++) {
             if (playerData.Cards[i] == null) {

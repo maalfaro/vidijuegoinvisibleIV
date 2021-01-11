@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -9,11 +10,13 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] private CardInventoryUI[] cardsInInventory;
     [SerializeField] private List<CardInventoryUI> cardsInventoryList;
+    [SerializeField] private Button exitButton;
 
     #endregion
 
     private void Awake() {
         OnUpdateInventory.RegisterListener(OnUpdateInventoryListener);
+        exitButton.onClick.AddListener(CloseInventory);
     }
 
     private void OnDestroy() {
@@ -50,7 +53,13 @@ public class InventoryManager : MonoBehaviour
     }
 
     private void OnUpdateInventoryListener(OnUpdateInventory data) {
+        SoundsManager.Instance.PlaySound("flipCard", 1f);
         Initialize();
+    }
+
+    private void CloseInventory() {
+        SoundsManager.Instance.PlaySound("click");
+        gameObject.SetActive(false);
     }
 
 }

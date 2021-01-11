@@ -18,7 +18,7 @@ public class MenuController : MonoBehaviour
     #region Monobehaviour methods
 
     private void Start() {
-        exitButton.onClick.AddListener(Application.Quit);
+        exitButton.onClick.AddListener(QuitGame);
         playButton.onClick.AddListener(InitGame);
     }
 
@@ -26,9 +26,14 @@ public class MenuController : MonoBehaviour
 
     #region Private methods
 
+    private void QuitGame() {
+        SoundsManager.Instance.PlaySound("click");
+        Application.Quit();
+    }
+
     private void InitGame() {
-        //StartCoroutine(_InitialText());
-        Core.Instance.StartGame();
+        SoundsManager.Instance.PlaySound("click");
+        StartCoroutine(_InitialText());
     }
 
     private IEnumerator _InitialText() {
@@ -49,7 +54,9 @@ public class MenuController : MonoBehaviour
         initialText.text = "RULY: AY!! MI CABEZA...";
         yield return new WaitForSeconds(4f);
         initialText.text = "(VOZ CONOCIDA): EH!.. RULY!... ¿ESTÁS DESPIERTO?... ABRE LOS OJOS HOMBRE";
-        yield return new WaitForSeconds(5f);
+        SoundsManager.Instance.PlaySound("mig_fondo");
+        yield return new WaitForSeconds(4.5f);
+        SoundsManager.Instance.PlayMusic("tema_normal",0.3f);
         Core.Instance.StartGame();
     }
 

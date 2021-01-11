@@ -83,6 +83,7 @@ public class Dice : PoolObject, IPointerDownHandler, IPointerUpHandler, IDragHan
 
         canvasGroup.alpha = 0;
         yield return new WaitForSeconds(0.4f);
+        SoundsManager.Instance.PlaySound("diceRoll", 1f);
         initialPos = transform.position;
         Vector3 initPos = initialPos + (Vector3.down * movement);
         float timer = 0f;

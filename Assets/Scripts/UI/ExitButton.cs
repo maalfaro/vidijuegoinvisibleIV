@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class ExitButton : MonoBehaviour
 {
-   public void GoToMenu() {
+    private void Start() {
+        SoundsManager.Instance.StopMusic();
+    }
+
+    public void GoToMenu() {
+        SoundsManager.Instance.PlaySound("click");
         Core.Instance.GoToMenu();
     }
 }

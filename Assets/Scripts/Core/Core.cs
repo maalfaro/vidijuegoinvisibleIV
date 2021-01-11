@@ -41,6 +41,7 @@ public class Core : Singleton<Core>
     #region Public methods
 
     public void GoToMenu() {
+        SoundsManager.Instance.StopMusic();
         SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Single);
     }
 
