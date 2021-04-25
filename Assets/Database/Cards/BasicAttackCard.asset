@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0499755107d31ad49b638ec781b03ccc, type: 3}
   m_Name: BasicAttackCard
   m_EditorClassIdentifier: 
-  Title: "Ataque b\xE1sico"
+  Title: Golpe de Fuet
   Description: Basic attack card
   Color: {r: 0.6784314, g: 0.23921566, b: 0.25801092, a: 1}
   Condition:

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab6f362fa9658e4c9736998895c207a, type: 3}
   m_Name: DodgeCard
   m_EditorClassIdentifier: 
-  Title: 
+  Title: Lo consideraremos
   Description: Dodge next attack
   Color: {r: 0.6792453, g: 0.43152374, b: 0.16981132, a: 1}
   Condition:
