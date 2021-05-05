@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DodgeCard
   m_EditorClassIdentifier: 
   Title: Lo consideraremos
-  Description: Dodge next attack
+  Description: Esquiva siguiente ataque
   Color: {r: 0.6792453, g: 0.43152374, b: 0.16981132, a: 1}
   Condition:
     number: 4

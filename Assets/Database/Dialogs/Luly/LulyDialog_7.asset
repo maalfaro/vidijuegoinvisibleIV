@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b55989591cd5d24498f8720783c239f, type: 3}
-  m_Name: Dialog 6
+  m_Name: LulyDialog_7
   m_EditorClassIdentifier: 
   IsPlayer: 1
-  TextTime: 3
+  TextTime: 5
   WaitTime: 0.5
-  Dialog: jejejejejeje
+  Dialog: "En fin... tendr\xE9 que liberarte..."

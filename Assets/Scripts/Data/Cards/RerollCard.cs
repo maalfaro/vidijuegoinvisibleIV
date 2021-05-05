@@ -13,13 +13,13 @@ public class RerollCard : Card
     private int rerollRemains;
     public override void Initialize() {
         rerollRemains = TotalReRolls;
-        Description = $"Reroll a Dice\n ({rerollRemains} uses)";
+        Description = $"Reroll a Dice\n ({rerollRemains} usos)";
     }
 
     public override void Use(int number)
     {
         rerollRemains--;
-        Description = $"Reroll a Dice\n ({rerollRemains} uses)";
+        Description = $"Volver a lanzar\n ({rerollRemains} usos)";
         new OnRerollDice() { rerollRemains = rerollRemains}.FireEvent();
     }
 

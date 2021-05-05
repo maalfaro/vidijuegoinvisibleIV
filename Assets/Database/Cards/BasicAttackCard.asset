@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BasicAttackCard
   m_EditorClassIdentifier: 
   Title: Golpe de Fuet
-  Description: Basic attack card
+  Description: "Ataque b\xE1sico"
   Color: {r: 0.6784314, g: 0.23921566, b: 0.25801092, a: 1}
   Condition:
     number: 0

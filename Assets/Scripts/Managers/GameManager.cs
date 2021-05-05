@@ -230,6 +230,9 @@ public class GameManager : MonoBehaviour
             StartCoroutine(_Fade(cardsCanvasGroup,1,0,0.5f));
         }));
 
+        // Si el enemigo no tiene inventario fin del juego
+        if (Core.Instance.CurrentLevel.enemyData.Inventory.Count == 0) return;
+
         //Paramos el juego
         StartCoroutine(_WaitFor(3f, () => {
             rewardManager.Initialize(Core.Instance.CurrentLevel.enemyData);

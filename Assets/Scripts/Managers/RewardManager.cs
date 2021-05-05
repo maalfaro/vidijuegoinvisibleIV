@@ -21,8 +21,6 @@ public class RewardManager : MonoBehaviour
         rewardButtons[0].onClick.AddListener(() => ReclaimReward(enemyData.Inventory[0]));
         rewardButtons[1].onClick.AddListener(() => ReclaimReward(enemyData.Inventory[1]));
 
-
-
         for (int i = 0; i < cards.Length; i++) {
             if (i < enemyData.Inventory.Count) {
                 cards[i].Initialize(enemyData.Inventory[i]);

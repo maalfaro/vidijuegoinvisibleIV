@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RecoveryHealthCard 1
   m_EditorClassIdentifier: 
   Title: Cigarrito de queso
-  Description: Recovery Health
+  Description: Recupera salud
   Color: {r: 0.24029905, g: 0.6792453, b: 0.24029905, a: 1}
   Condition:
     number: 0

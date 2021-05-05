@@ -20,8 +20,16 @@ MonoBehaviour:
   Dodge: 0
   Cards:
   - {fileID: 11400000, guid: bd1db8f9719885147b9649be6f23bdb0, type: 2}
-  - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
-  - {fileID: 11400000, guid: 88a4e36a91e57274db422358862f5275, type: 2}
+  - {fileID: 11400000, guid: 0699d5950a856354781fbfbd7b031484, type: 2}
+  - {fileID: 11400000, guid: 9b31b46f03350c04282094ca1d8e5bb9, type: 2}
   Inventory:
-  - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
-  - {fileID: 11400000, guid: 88a4e36a91e57274db422358862f5275, type: 2}
+  - {fileID: 11400000, guid: 0699d5950a856354781fbfbd7b031484, type: 2}
+  - {fileID: 11400000, guid: 9b31b46f03350c04282094ca1d8e5bb9, type: 2}
+  dialogs:
+  - {fileID: 11400000, guid: e4069e3c92c8ce24f9fe40ecf866b6cc, type: 2}
+  - {fileID: 11400000, guid: 7303f03118c111844944e51ef5d43466, type: 2}
+  - {fileID: 11400000, guid: 986a46a8ecbe06b449a6af249a7aade0, type: 2}
+  - {fileID: 11400000, guid: 329cdcab54a98ca40ba16fe576636ffe, type: 2}
+  - {fileID: 11400000, guid: f18cc5e6377d45a4db6afb773b7ec3bc, type: 2}
+  - {fileID: 11400000, guid: c2df8065637920949aba7a4a647c2745, type: 2}
+  - {fileID: 11400000, guid: f057df919bf440f46a5e109abe2860ed, type: 2}

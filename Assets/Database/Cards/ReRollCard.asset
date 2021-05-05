@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1140ae923db75224d93874b789ef252b, type: 3}
   m_Name: ReRollCard
   m_EditorClassIdentifier: 
-  Title: 
-  Description: "Reroll a Dice\n (3 uses)"
+  Title: "Otra vez ser\xE1..."
+  Description: Volver a lanzar
   Color: {r: 0.6784314, g: 0.6570866, b: 0.23921566, a: 1}
   Condition:
     number: 0
