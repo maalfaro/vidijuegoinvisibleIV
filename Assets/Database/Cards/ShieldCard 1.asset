@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf39dd872b80574da9c841ccb68d4fb, type: 3}
   m_Name: ShieldCard 1
   m_EditorClassIdentifier: 
-  Title: 
+  Title: Quelita cobertura
   Description: "A\xF1ade escudo"
   Color: {r: 0.16862744, g: 0.36909786, b: 0.6784314, a: 1}
   Condition:

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TonimiDialog_1
   m_EditorClassIdentifier: 
   IsPlayer: 0
-  TextTime: 4
+  TextTime: 5
   WaitTime: 1
-  Dialog: Mira Ruly soy un dado!!
+  Dialog: Bienvenido al Tonidiario de las 9 en punto!!

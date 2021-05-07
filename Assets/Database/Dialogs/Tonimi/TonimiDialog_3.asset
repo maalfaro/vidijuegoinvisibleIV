@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcd235f4b5280104390c4a9468475156, type: 3}
-  m_Name: SplitDiceCard 1
+  m_Script: {fileID: 11500000, guid: 0b55989591cd5d24498f8720783c239f, type: 3}
+  m_Name: TonimiDialog_3
   m_EditorClassIdentifier: 
-  Title: 
-  Description: Divide el dado
-  Color: {r: 0.6784314, g: 0.6570866, b: 0.23921566, a: 1}
-  Condition:
-    number: 0
-    type: 0
-  movement: -500
+  IsPlayer: 0
+  TextTime: 4
+  WaitTime: 0.5
+  Dialog: Te traje quelitas...

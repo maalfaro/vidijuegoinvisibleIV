@@ -21,10 +21,10 @@ MonoBehaviour:
   Cards:
   - {fileID: 11400000, guid: bd1db8f9719885147b9649be6f23bdb0, type: 2}
   - {fileID: 11400000, guid: 5bebaba1b73dcf84b95de41c3c8492d6, type: 2}
-  - {fileID: 11400000, guid: 88a4e36a91e57274db422358862f5275, type: 2}
+  - {fileID: 11400000, guid: 29ec98ece2265704ab9634c48f2a165b, type: 2}
   Inventory:
   - {fileID: 11400000, guid: 5bebaba1b73dcf84b95de41c3c8492d6, type: 2}
-  - {fileID: 11400000, guid: 88a4e36a91e57274db422358862f5275, type: 2}
+  - {fileID: 11400000, guid: 29ec98ece2265704ab9634c48f2a165b, type: 2}
   dialogs:
   - {fileID: 11400000, guid: 336215ca062431b45abe27e0648bfc77, type: 2}
   - {fileID: 11400000, guid: 6960a45d8a46c6b479ee6105a91bcda8, type: 2}

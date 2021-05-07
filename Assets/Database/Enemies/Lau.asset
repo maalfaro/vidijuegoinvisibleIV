@@ -23,4 +23,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
   Inventory:
   - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
-  dialogs: []
+  dialogs:
+  - {fileID: 11400000, guid: 8545e88cc48062240a02e8e329749a3b, type: 2}
+  - {fileID: 11400000, guid: 83ee4da76a316b744a5adc470d17dd6a, type: 2}
+  - {fileID: 11400000, guid: 6c79bbc2a233bdb4c848d85ffd650b4a, type: 2}
+  - {fileID: 11400000, guid: 80a02613a057cd2469243b6982efec5b, type: 2}
+  - {fileID: 11400000, guid: 47d4c21342997a44abf3d2ef78abc917, type: 2}
+  - {fileID: 11400000, guid: f31552253f1882946862f3442decd193, type: 2}
+  - {fileID: 11400000, guid: 838b1a8550a259f44aba4d3a9df47487, type: 2}
+  - {fileID: 11400000, guid: eb353e3e1d4830f40a5ea8c4862225ec, type: 2}
