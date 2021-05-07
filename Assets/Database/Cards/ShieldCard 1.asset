@@ -16,7 +16,7 @@ MonoBehaviour:
   Description: "A\xF1ade escudo"
   Color: {r: 0.16862744, g: 0.36909786, b: 0.6784314, a: 1}
   Condition:
-    number: 0
-    type: 0
+    number: 4
+    type: 4
   movement: -500
   multiplier: 1

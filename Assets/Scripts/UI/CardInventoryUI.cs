@@ -48,6 +48,7 @@ public class CardInventoryUI : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             image.color = Color.grey;
             diceTransform.gameObject.SetActive(false);
             descriptionText.text = "Vacio";
+            titleText.text = string.Empty;
         }
 
     }

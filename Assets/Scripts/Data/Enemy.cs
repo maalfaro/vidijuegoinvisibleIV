@@ -9,6 +9,7 @@ using UnityEditor;
 [System.Serializable]
 public class Enemy : PlayerData {
 
+    public Sprite winImage;
     public List<DialogData> dialogs;
 
 

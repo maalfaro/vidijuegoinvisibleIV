@@ -49,7 +49,7 @@ public class MenuController : MonoBehaviour
         yield return new WaitForSeconds(6f);
         initialText.text = "RULY: UFFF NO SE SI FUE BUENA IDEA TOMARNOS UNOS WHISKITOS CON ÉL...";
         yield return new WaitForSeconds(6f);
-        initialText.text = "RULY: AUNQUE RECUERDO QUE EN LA PARTIDA MIG MENCIONÓ ALGO DE CONVERTIR A LA GENTE EN DADOS Y ESO ME PARECIÓ MUY GRACIOSO (RENQUEO RENQUEO)";
+        initialText.text = "RULY: AUNQUE RECUERDO QUE EN LA PARTIDA MIG MENCIONÓ ALGO DE CONVERTIR A LA GENTE EN DADOS Y ESO ME PARECIÓ MUY GRACIOSO JAJAJAJA (RENQUEO RENQUEO)";
         yield return new WaitForSeconds(8f);
         initialText.text = "RULY: AY!! MI CABEZA...";
         yield return new WaitForSeconds(4f);

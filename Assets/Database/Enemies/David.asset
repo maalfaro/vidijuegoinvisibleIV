@@ -25,6 +25,8 @@ MonoBehaviour:
   Inventory:
   - {fileID: 11400000, guid: 88a4e36a91e57274db422358862f5275, type: 2}
   - {fileID: 11400000, guid: 47722b3aae80b8a4cad0ae0f7057f66a, type: 2}
+  winImage: {fileID: -3346575053172843645, guid: e34d34b4092973c43a7426cfcdfbc10f,
+    type: 3}
   dialogs:
   - {fileID: 11400000, guid: 3e587da58dd0e5e4bb9a68fd1ca33b80, type: 2}
   - {fileID: 11400000, guid: daf772bc4fd0d9841a861e7630ace919, type: 2}
@@ -33,4 +35,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e3b59e6dd98e3204d98a6039315f3fa2, type: 2}
   - {fileID: 11400000, guid: 6b571d6febd7f254b89df3199f59c914, type: 2}
   - {fileID: 11400000, guid: 09b2f02ca18cb6147b99e9c70cccd399, type: 2}
-  - {fileID: 11400000, guid: ef73fc3e016f00c45a3085df12ed54c0, type: 2}

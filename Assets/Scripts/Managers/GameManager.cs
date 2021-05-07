@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject winPopUp;
     [SerializeField] private GameObject losePopUp;
     [SerializeField] private TMPro.TextMeshProUGUI winDescriptionText;
+    [SerializeField] private Image winImage;
 
     [Header("Layouts")]
     [SerializeField] private Transform playerLayout;
@@ -66,8 +67,10 @@ public class GameManager : MonoBehaviour
         playerUI.Initialize();
         textManager.Initialize(Core.Instance.CurrentLevel.enemyData.dialogs);
 
+        winImage.sprite = Core.Instance.CurrentLevel.enemyData.winImage;
         if (Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Angel")) {
             winDescriptionText.text = string.Empty;
+            winImage.transform.parent.gameObject.SetActive(false);
         } else if (Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Demonio")) {
             winDescriptionText.text = $"Has derrotado a Mig El Demonio";
         } else {

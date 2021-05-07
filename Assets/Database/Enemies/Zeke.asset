@@ -25,6 +25,8 @@ MonoBehaviour:
   Inventory:
   - {fileID: 11400000, guid: 5bebaba1b73dcf84b95de41c3c8492d6, type: 2}
   - {fileID: 11400000, guid: 29ec98ece2265704ab9634c48f2a165b, type: 2}
+  winImage: {fileID: 2044097436281933803, guid: e34d34b4092973c43a7426cfcdfbc10f,
+    type: 3}
   dialogs:
   - {fileID: 11400000, guid: 336215ca062431b45abe27e0648bfc77, type: 2}
   - {fileID: 11400000, guid: 6960a45d8a46c6b479ee6105a91bcda8, type: 2}
