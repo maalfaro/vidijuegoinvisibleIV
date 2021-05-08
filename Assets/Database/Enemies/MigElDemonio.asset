@@ -26,4 +26,11 @@ MonoBehaviour:
   Inventory: []
   winImage: {fileID: -4719546177939281367, guid: e34d34b4092973c43a7426cfcdfbc10f,
     type: 3}
-  dialogs: []
+  dialogs:
+  - {fileID: 11400000, guid: 7223d7ba5b7fe28469a66d66da5c5851, type: 2}
+  - {fileID: 11400000, guid: b4682fd03e5eca247b4359b6e37a8726, type: 2}
+  - {fileID: 11400000, guid: 55c181d923c73f746860082c8f3a42ac, type: 2}
+  - {fileID: 11400000, guid: 62cc4aa941a212844b6f1c35696b3511, type: 2}
+  - {fileID: 11400000, guid: 03bd17d1b231b8549bae15327e01b44e, type: 2}
+  - {fileID: 11400000, guid: 1fb5376c6b6adf541a0ce2ff2f727043, type: 2}
+  - {fileID: 11400000, guid: fc0dbf52a43f85d4daca3ddd415cd350, type: 2}

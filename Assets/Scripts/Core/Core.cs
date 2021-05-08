@@ -82,11 +82,16 @@ public class Core : Singleton<Core>
 
     private void IntializeLevels() {
         levels = new List<LevelData>();
-        enemiesPrefabs.Shuffle();
-        enemiesPrefabs.Insert(0, MigsData[0]);
-        for (int i = 0; i < enemiesPrefabs.Count; i++) {
+        List<Enemy> enemies = new List<Enemy>(enemiesPrefabs);
+
+        do {
+            enemies.Shuffle();
+        } while (enemies.IndexOf(enemiesPrefabs[0]) < 4);
+
+        enemies.Insert(0, MigsData[0]);
+        for (int i = 0; i < enemies.Count; i++) {
             LevelData level = new LevelData();
-            level.enemyData = (Enemy) enemiesPrefabs[i].Clone();
+            level.enemyData = (Enemy)enemies[i].Clone();
             level.enemyData.MaxHealth = i < 1 ? 6 : i < 3 ? 10 : i < 7 ? 15 : 20;
             level.numDice = i < 1 ? 1 : i < 3 ? 2 : i < 7 ? 3 : 4;
             levels.Add(level);

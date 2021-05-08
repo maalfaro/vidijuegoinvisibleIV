@@ -12,4 +12,9 @@ public class ExitButton : MonoBehaviour
         SoundsManager.Instance.PlaySound("click");
         Core.Instance.GoToMenu();
     }
+
+    public void ExitGame() {
+        SoundsManager.Instance.PlaySound("click");
+        Application.Quit();
+    }
 }

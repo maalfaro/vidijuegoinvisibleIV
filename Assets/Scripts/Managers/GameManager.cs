@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [Header("Botones")]
     [SerializeField] private Button endTurnButton;
     [SerializeField] private Button gameOverButton;
+    [SerializeField] private Button retryButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button showExitButton;
     [SerializeField] private Button nextLevelButton;
@@ -72,7 +73,7 @@ public class GameManager : MonoBehaviour
             winDescriptionText.text = string.Empty;
             winImage.transform.parent.gameObject.SetActive(false);
         } else if (Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Demonio")) {
-            winDescriptionText.text = $"Has derrotado a Mig El Demonio";
+            winDescriptionText.text = $"Has derrotado a Mig El Demonio\ny liberado a Mig";
         } else {
             winDescriptionText.text = $"Has liberado a {Core.Instance.CurrentLevel.enemyData.Name}";
         }
@@ -86,10 +87,11 @@ public class GameManager : MonoBehaviour
 
     private void InitializeButtons() {
         endTurnButton.onClick.AddListener(EndTurn);
-        gameOverButton.onClick.AddListener(PlayClickAndGoToMenu);
+        retryButton.onClick.AddListener(PlayClickAndGoToMenu);
         exitButton.onClick.AddListener(PlayClickAndGoToMenu);
         nextLevelButton.onClick.AddListener(PlayClickAndGoToNextLevel);
         inventoryButton.onClick.AddListener(ShowInventory);
+        gameOverButton.onClick.AddListener(Application.Quit);
         nextLevelButton.gameObject.SetActive(false);
         inventoryButton.gameObject.SetActive(false);
     }
@@ -234,7 +236,10 @@ public class GameManager : MonoBehaviour
         }));
 
         // Si el enemigo no tiene inventario fin del juego
-        if (Core.Instance.CurrentLevel.enemyData.Inventory.Count == 0) return;
+        if (Core.Instance.CurrentLevel.enemyData.Inventory.Count == 0) {
+            StartCoroutine(_WaitFor(5f, Core.Instance.GoToNextLevel));
+            return;
+        }
 
         //Paramos el juego
         StartCoroutine(_WaitFor(3f, () => {

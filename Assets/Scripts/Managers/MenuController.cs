@@ -19,23 +19,11 @@ public class MenuController : MonoBehaviour
 
     private void Start() {
         StartCoroutine(_InitialText());
-        //exitButton.onClick.AddListener(QuitGame);
-        //playButton.onClick.AddListener(InitGame);
     }
 
     #endregion
 
     #region Private methods
-
-    private void QuitGame() {
-        SoundsManager.Instance.PlaySound("click");
-        Application.Quit();
-    }
-
-    private void InitGame() {
-        SoundsManager.Instance.PlaySound("click");
-        StartCoroutine(_InitialText());
-    }
 
     private IEnumerator _InitialText() {
         initialText.transform.parent.gameObject.SetActive(true);
