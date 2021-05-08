@@ -18,8 +18,9 @@ public class MenuController : MonoBehaviour
     #region Monobehaviour methods
 
     private void Start() {
-        exitButton.onClick.AddListener(QuitGame);
-        playButton.onClick.AddListener(InitGame);
+        StartCoroutine(_InitialText());
+        //exitButton.onClick.AddListener(QuitGame);
+        //playButton.onClick.AddListener(InitGame);
     }
 
     #endregion
@@ -39,7 +40,7 @@ public class MenuController : MonoBehaviour
     private IEnumerator _InitialText() {
         initialText.transform.parent.gameObject.SetActive(true);
         initialText.text = string.Empty;
-        yield return _Fade(canvasGroupInitialText, 0, 1, 0.5f);
+        //yield return _Fade(canvasGroupInitialText, 0, 1, 0.5f);
         yield return new WaitForSeconds(1f);
         initialText.text = "RULY: OH DIOS!!";
         yield return new WaitForSeconds(4f);

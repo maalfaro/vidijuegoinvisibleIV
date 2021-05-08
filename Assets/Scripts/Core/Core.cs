@@ -78,7 +78,6 @@ public class Core : Singleton<Core>
         playerData.Inventory = new List<Card>();
         playerData.Cards = new Card[4];
         playerData.Cards[0] = initialCards[0];
-        //playerData.Cards[1] = initialCards[1];
     }
 
     private void IntializeLevels() {
