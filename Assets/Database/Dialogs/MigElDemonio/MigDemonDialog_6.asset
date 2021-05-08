@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b55989591cd5d24498f8720783c239f, type: 3}
-  m_Name: MigDemonDialog_1
+  m_Name: MigDemonDialog_6
   m_EditorClassIdentifier: 
-  IsPlayer: 0
-  TextTime: 5
-  WaitTime: 1
-  Dialog: Parece que es hora de enfretarte contra mi!!
+  IsPlayer: 1
+  TextTime: 3
+  WaitTime: 0.5
+  Dialog: Se te ve el bigote pintado...

@@ -16,7 +16,7 @@ MonoBehaviour:
   Description: Recupera salud x2
   Color: {r: 0.24029905, g: 0.6792453, b: 0.24029905, a: 1}
   Condition:
-    number: 0
-    type: 0
+    number: 4
+    type: 1
   movement: -500
   multiplier: 2
