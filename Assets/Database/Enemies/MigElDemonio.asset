@@ -20,9 +20,9 @@ MonoBehaviour:
   Dodge: 0
   Cards:
   - {fileID: 11400000, guid: bd1db8f9719885147b9649be6f23bdb0, type: 2}
-  - {fileID: 11400000, guid: c8f3d340314fdfb4cab498ba60bf88b4, type: 2}
-  - {fileID: 11400000, guid: 0699d5950a856354781fbfbd7b031484, type: 2}
-  - {fileID: 11400000, guid: 3043a57c53d9d2b40998b38b0b3df4ba, type: 2}
+  - {fileID: 11400000, guid: 09f7e307eea5f214ab1bc5014e740d3a, type: 2}
+  - {fileID: 11400000, guid: 86e4a14315bae46418fcbe091ea31536, type: 2}
+  - {fileID: 11400000, guid: 67249481518c8004a9e362afec64c170, type: 2}
   Inventory: []
   winImage: {fileID: -4719546177939281367, guid: e34d34b4092973c43a7426cfcdfbc10f,
     type: 3}

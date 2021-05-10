@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1140ae923db75224d93874b789ef252b, type: 3}
-  m_Name: ReRollCard
+  m_Script: {fileID: 11500000, guid: 0499755107d31ad49b638ec781b03ccc, type: 3}
+  m_Name: DoubleAttackCard 1
   m_EditorClassIdentifier: 
-  Title: Tirada extra
-  Description: "Reroll a Dice\n (3 usos)"
-  Color: {r: 0.6784314, g: 0.6570866, b: 0.23921566, a: 1}
+  Title: Golpe campano
+  Description: Ataque x2
+  Color: {r: 0.6784314, g: 0.23921566, b: 0.25801092, a: 1}
   Condition:
     number: 0
     type: 0
-  movement: -500
-  TotalReRolls: 3
+  movement: 500
+  multiplier: 2

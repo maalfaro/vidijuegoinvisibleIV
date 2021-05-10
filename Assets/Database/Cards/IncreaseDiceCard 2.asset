@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1140ae923db75224d93874b789ef252b, type: 3}
-  m_Name: ReRollCard
+  m_Script: {fileID: 11500000, guid: ed2369b33b4844f438555677ac4fe120, type: 3}
+  m_Name: IncreaseDiceCard 2
   m_EditorClassIdentifier: 
-  Title: Tirada extra
-  Description: "Reroll a Dice\n (3 usos)"
+  Title: La arrancada
+  Description: Incrementa dado
   Color: {r: 0.6784314, g: 0.6570866, b: 0.23921566, a: 1}
   Condition:
     number: 0
     type: 0
   movement: -500
-  TotalReRolls: 3
+  increase: 1

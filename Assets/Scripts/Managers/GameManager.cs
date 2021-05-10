@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button endTurnButton;
     [SerializeField] private Button gameOverButton;
     [SerializeField] private Button retryButton;
+    [SerializeField] private Button retryPauseButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button showExitButton;
     [SerializeField] private Button nextLevelButton;
@@ -88,6 +89,7 @@ public class GameManager : MonoBehaviour
     private void InitializeButtons() {
         endTurnButton.onClick.AddListener(EndTurn);
         retryButton.onClick.AddListener(PlayClickAndGoToMenu);
+        retryPauseButton.onClick.AddListener(PlayClickAndGoToMenu);
         exitButton.onClick.AddListener(PlayClickAndGoToMenu);
         nextLevelButton.onClick.AddListener(PlayClickAndGoToNextLevel);
         inventoryButton.onClick.AddListener(ShowInventory);
