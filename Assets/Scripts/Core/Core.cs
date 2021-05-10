@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,10 +21,12 @@ public class Core : Singleton<Core>
 
     private List<LevelData> levels;
     private LevelData currentLevel;
+    private GameData gameData;
 
     public LevelData CurrentLevel => currentLevel; 
     public PlayerData PlayerData => playerData;
     public Card[] SelectedCards => playerData.Cards;
+
 
     #endregion
 
@@ -32,6 +35,7 @@ public class Core : Singleton<Core>
     protected override void InitInstance()
     {
         base.InitInstance();
+        ReadGameData();
         IntializePlayerData();
         GoToMenu();
     }
@@ -92,8 +96,8 @@ public class Core : Singleton<Core>
         for (int i = 0; i < enemies.Count; i++) {
             LevelData level = new LevelData();
             level.enemyData = (Enemy)enemies[i].Clone();
-            level.enemyData.MaxHealth = i < 1 ? 6 : i < 3 ? 10 : i < 7 ? 15 : 20;
-            level.numDice = i < 1 ? 1 : i < 3 ? 2 : i < 7 ? 3 : 4;
+            level.enemyData.MaxHealth = gameData.GetMaxhealth(i);
+            level.numDice = gameData.GetNumDices(i);
             levels.Add(level);
         }
         LevelData levelBoss = new LevelData();
@@ -101,6 +105,11 @@ public class Core : Singleton<Core>
         levelBoss.enemyData.MaxHealth = 30;
         levelBoss.numDice = 4;
         levels.Add(levelBoss);
+    }
+
+    private void ReadGameData() {
+        string path = Path.Combine(Application.streamingAssetsPath, "gamedata.json");
+        gameData = JsonUtility.FromJson<GameData>(File.ReadAllText(path));
     }
 
     #endregion
@@ -126,4 +135,27 @@ public class LevelData {
     public Enemy enemyData;
     public int numDice;
 
+}
+
+[System.Serializable] 
+public class GameData {
+
+    public int[] MaxHealthLevels;
+    public int[] MaxHealthData;
+    public int[] NumDiceLevels;
+    public int[] NumDiceData;
+
+    public int GetMaxhealth(int level) {
+        for(int i = 0; i < MaxHealthLevels.Length; i++) {
+            if (level < MaxHealthLevels[i]) return MaxHealthData[i];
+        }
+        return MaxHealthData[MaxHealthLevels.Length - 1];
+    }
+
+    public int GetNumDices(int level) {
+        for (int i = 0; i < NumDiceLevels.Length; i++) {
+            if (level < NumDiceLevels[i]) return NumDiceData[i];
+        }
+        return MaxHealthData[NumDiceLevels.Length - 1];
+    }
 }

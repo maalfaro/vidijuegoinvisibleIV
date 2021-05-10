@@ -1,0 +1,24 @@
+{
+    "MaxHealthLevels": [
+        1,
+        3,
+        7
+    ],
+    "MaxHealthData": [
+        6,
+        10,
+        15,
+        20
+    ],
+    "NumDiceLevels": [
+        1,
+        3,
+        7
+    ],
+    "NumDiceData": [
+        1,
+        2,
+        3,
+        4
+    ]
+}
