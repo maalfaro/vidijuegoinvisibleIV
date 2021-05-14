@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     private bool playerTurn;
     private List<CardUI> enemyCardUIs;
     private List<Dice> enemyDices;
+    private bool interactable;
 
     #endregion
 
@@ -70,9 +71,9 @@ public class GameManager : MonoBehaviour
         textManager.Initialize(Core.Instance.CurrentLevel.enemyData.dialogs);
 
         winImage.sprite = Core.Instance.CurrentLevel.enemyData.winImage;
+        winImage.transform.parent.gameObject.SetActive(false);
         if (Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Angel")) {
             winDescriptionText.text = string.Empty;
-            winImage.transform.parent.gameObject.SetActive(false);
         } else if (Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Demonio")) {
             winDescriptionText.text = $"Has derrotado a Mig El Demonio\ny liberado a Mig";
         } else {
@@ -80,6 +81,7 @@ public class GameManager : MonoBehaviour
         }
 
         InitializePlayerDices();
+        interactable = true;
     }
 
     private void OnDestroy() {
@@ -188,8 +190,9 @@ public class GameManager : MonoBehaviour
         return enemyDicesNumbers;
     }
 
-    private void EndTurn()
-    {
+    private void EndTurn() {
+        if (!interactable) return;
+
         playerTurn = !playerTurn;
         if (playerTurn) {
             //Preparamos los datos del jugador
@@ -249,6 +252,7 @@ public class GameManager : MonoBehaviour
             rewardManager.gameObject.SetActive(true);
             nextLevelButton.gameObject.SetActive(true);
             inventoryButton.gameObject.SetActive(true);
+            winImage.transform.parent.gameObject.SetActive(Core.Instance.CurrentLevel.enemyData.Name.Equals("Mig El Angel") == false);
         }));
     }
 
@@ -279,6 +283,7 @@ public class GameManager : MonoBehaviour
     #region Listeners
 
     private void OnDiceUsedListener(OnDiceUsed data) {
+        interactable = false;
         if (data.Card != null && data.Dice != null) {
             if (playerTurn) {
                 dicePool.ReleasePoolObject(data.Dice);
@@ -287,11 +292,15 @@ public class GameManager : MonoBehaviour
                 enemyDices.Remove(data.Dice);
                 enemyCardUIs.RemoveAll(x => x.CardData.Equals(data.Card));
                 StartCoroutine(_WaitFor(3f, DoEnemyAction));
-                
             }
 
-            StartCoroutine(_WaitFor(0.5f, () => data.Card.Use(data.Dice.Number)));
+            StartCoroutine(_WaitFor(0.5f, () => UseCard(data.Card,data.Dice.Number)));
         }
+    }
+
+    private void UseCard(Card card, int diceNumber) {
+        card.Use(diceNumber);
+        interactable = true;
     }
 
     private void DoEnemyAction() {
