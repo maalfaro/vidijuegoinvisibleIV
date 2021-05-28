@@ -15,7 +15,6 @@ public class RewardManager : MonoBehaviour
     [SerializeField] private GameObject[] SelectedImgs;
 
     private Card selectedCard;
-    private int selectedOption;
 
     #endregion
 
@@ -62,7 +61,7 @@ public class RewardManager : MonoBehaviour
     private void ReclaimReward() {
         SoundsManager.Instance.PlaySound("switchOn");
 
-        if (selectedOption == 2) {
+        if (selectedCard == null) {
             ReclaimPlayerHealth();
             return;
         }

@@ -140,22 +140,16 @@ public class LevelData {
 [System.Serializable] 
 public class GameData {
 
-    public int[] MaxHealthLevels;
     public int[] MaxHealthData;
-    public int[] NumDiceLevels;
     public int[] NumDiceData;
 
     public int GetMaxhealth(int level) {
-        for(int i = 0; i < MaxHealthLevels.Length; i++) {
-            if (level < MaxHealthLevels[i]) return MaxHealthData[i];
-        }
-        return MaxHealthData[MaxHealthLevels.Length - 1];
+        int healthIndex = level < MaxHealthData.Length ? level : MaxHealthData.Length - 1;
+        return MaxHealthData[healthIndex];
     }
 
     public int GetNumDices(int level) {
-        for (int i = 0; i < NumDiceLevels.Length; i++) {
-            if (level < NumDiceLevels[i]) return NumDiceData[i];
-        }
-        return MaxHealthData[NumDiceLevels.Length - 1];
+        int diceIndex = level < NumDiceData.Length ? level : NumDiceData.Length - 1;
+        return NumDiceData[diceIndex];
     }
 }
