@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
         endTurnButton.onClick.AddListener(EndTurn);
         retryButton.onClick.AddListener(PlayClickAndGoToMenu);
         retryPauseButton.onClick.AddListener(PlayClickAndGoToMenu);
-        exitButton.onClick.AddListener(PlayClickAndGoToMenu);
+        exitButton.onClick.AddListener(Application.Quit);
         nextLevelButton.onClick.AddListener(PlayClickAndGoToNextLevel);
         inventoryButton.onClick.AddListener(ShowInventory);
         gameOverButton.onClick.AddListener(Application.Quit);

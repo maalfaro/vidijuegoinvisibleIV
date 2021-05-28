@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 public class Core : Singleton<Core>
 {
@@ -109,12 +110,24 @@ public class Core : Singleton<Core>
 
     private void ReadGameData() {
         string path = Path.Combine(Application.streamingAssetsPath, "gamedata.json");
+#if UNITY_ANDROID
+        StartCoroutine(GetAndroidStreamingAssets(path));
+#else
         gameData = JsonUtility.FromJson<GameData>(File.ReadAllText(path));
+#endif
     }
 
-    #endregion
 
-    #region Utils
+    private IEnumerator GetAndroidStreamingAssets(string filePath) {
+        UnityWebRequest www = UnityWebRequest.Get(filePath);
+        yield return www.SendWebRequest();
+        string dataAsJson = www.downloadHandler.text;
+        gameData = JsonUtility.FromJson<GameData>(dataAsJson);
+    }
+
+#endregion
+
+#region Utils
 
     /// <summary>
     /// Genera un ID unico para cada usuario
@@ -125,7 +138,7 @@ public class Core : Singleton<Core>
         return System.DateTime.Now.Ticks.ToString("x");
     }
 
-    #endregion
+#endregion
 
 }
 
